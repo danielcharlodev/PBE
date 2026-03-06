@@ -1,0 +1,458 @@
+/*
+Theme Name: CardioPress
+Theme URI: https://www.nayrathemes.com/cardiopress-free/
+Author: Nayra Themes
+Author URI: https://www.nayrathemes.com/
+Description: CardioPress health & medical WordPress theme. It has come with predefined Sections, Which helps you to build your own professional medical website. CardioPress based on in-depth research into hospital, clinic, dentist, dermatology, dental, cosmetology, plastic surgery, laser surgery, dietitian, chiropractic, rehab, pharmacy, veterinary or any medical business. View the demo of CardioPress Pro https://www.nayrathemes.com/demo/pro/?theme=cardiopress
+Version: 9.5
+Template: medazin
+Tested up to: 6.9
+Requires PHP: 5.6
+Requires at least:  4.7
+License: GPLv3 or later
+License URI:  https://www.gnu.org/licenses/gpl-3.0.html
+slug: cardiopress
+Text Domain: cardiopress
+Tags: one-column, two-columns, right-sidebar, flexible-header, custom-background, custom-colors, custom-header, custom-menu, featured-image-header, featured-images, footer-widgets, full-width-template, sticky-post, theme-options, threaded-comments, translation-ready, blog, e-commerce, portfolio, editor-style, grid-layout
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+
+*/
+
+/* Header */
+.header-3 .logo {
+    min-height: 100px;
+    padding: 18px 0;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.header-3 .logo > a{
+    height: inherit;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.header-3 .logo::before {
+    min-height: 120px;
+}
+
+
+.main-menu li .nav-link {
+    color: #fff;
+}
+
+h4.site-title {
+    margin-bottom: 0;
+}
+
+.header a.site-title, .header a.custom-logo-link  {
+	display: block;
+	line-height: 1;
+}
+
+.header p.site-description {
+	line-height: 1;
+	margin: 0.9523vw 0 0;
+}
+
+@media (min-width: 992px) {
+    header.header-2 {
+		top: 30px;
+	}
+}
+
+/* Slider */
+.item .cover .slider-content h2 {
+ -webkit-text-stroke: 1px;
+}
+
+.item .cover .slider-content h2 {
+	font-size: 30px;
+	font-weight: 400;
+}
+
+.item .cover .slider-content>p {
+	margin-bottom : 1.5em;
+}
+
+
+@media (min-width: 768px) {
+    .item .cover .slider-content h2 {
+        font-size: 40px;
+		font-weight: 600;
+    }
+}
+
+@media (min-width: 992px) {
+    .item .cover .slider-content h2 {
+        font-size: 56px;
+    }
+	
+	.item img {
+		min-height: 800px;
+	}
+}
+
+.item .cover .slider-content h2>.slider-sub-title {
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+}
+
+.item .cover .slider-content h2 {
+    -webkit-text-fill-color: #fff;
+    color: #fff;
+}
+
+/* Process */
+section.work-process-section.home-process {
+    margin-top: 100px;
+}
+
+.work-process-section .main-item:not(:last-child)::after {
+    background: url(../cardiopress/assets/images/work-process.png) no-repeat; 
+}
+
+/* Feature */
+.feature-section .bg-elements img.element1 {
+    width: auto;
+}
+
+
+/* Info */
+section.info-section button#toggle-btn{
+	background: var(--primary-color);
+}
+
+section.info-section .toggle-btn i{
+	border: 1px solid var(--primary-color);
+	color: var(--primary-color);
+}
+
+/* Footer */
+.footer-logo img {
+	width: auto;
+	max-width: 250px !important;
+}
+
+.widget_calendar caption {
+	position: static;
+	color: #fff;
+}
+
+.footer .wp-calendar-table a {
+	color: var(--primary-color);
+}
+
+.wp-block-code code img {
+	padding: 10px;
+}
+
+.wp-block-latest-posts__list .wp-block-latest-posts__post-author,
+.wp-block-latest-posts__list .wp-block-latest-posts__post-date {
+	text-decoration: none;
+}
+
+.wc-block-cart-items td {
+	color: inherit;
+}
+
+.wc-block-components-totals-coupon__content button.components-button {
+    border-radius: 0;
+}
+
+ul.wp-block-page-list a {
+    text-decoration: none;
+}
+
+.wc-block-featured-category__link .wp-block-button__link:focus {
+	color: #fff;
+}
+
+.wc-block-featured-product__price .woocommerce-Price-amount.amount {
+	color: inherit;
+}
+
+.wp-block-post-comments-form .comment-reply-title {
+    margin-bottom: 1.4rem;
+}
+
+.wp-block-group .wp-block-details p {
+	margin-top: 1rem;
+    padding-top: 1rem;
+}
+
+.woocommerce table.shop_attributes td {
+    text-decoration: none;
+}
+
+.wc-block-cart-items th {
+	color: inherit;
+}
+
+.wp-block-latest-posts__post-author {
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.post .entry-content ul.wp-block-post-template li.wp-block-post .wp-block-post-date {
+	padding-bottom: 1.2rem;
+}
+
+.wc-block-mini-cart__empty-cart-wrapper .wc-block-mini-cart__shopping-button:focus {
+	color: #fff;
+}
+
+.wc-block-featured-product__price .woocommerce-Price-amount.amount {
+	text-decoration: none;
+}
+
+.widget .wp-block-group pre.wp-block-preformatted {
+    background: rgba(26, 26, 26, 0.8);
+    color: #ddd;
+}
+
+.sidebar .widget .wp-block-file .wp-block-file__button {
+    background-color: #1b8415;
+}
+
+.wp-block-social-links .wp-social-link:last-child {
+    margin-bottom: 8px;
+}
+
+.wp-block-code.has-background code {
+    background: inherit;
+}
+
+.wc-block-mini-cart__footer-checkout:focus {
+    background-color: inherit;
+    color: #fff;
+}
+
+.wc-block-cart__submit-button,
+.wc-block-cart__submit-button:hover,
+.wc-block-cart__submit-button:focus {
+	text-decoration: none;
+}
+
+.wc-block-mini-cart__badge {
+    color: inherit;
+}
+
+table.wc-block-cart-items .wc-block-cart-items__row .wc-block-components-product-name {
+	line-height: 16px;
+}
+
+.wc-block-mini-cart__footer .wc-block-mini-cart__footer-actions a {
+	font-size: 1.2rem;
+	text-decoration: none;
+}
+
+.wc-block-mini-cart__footer span.wc-block-components-totals-item__label {
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.wp-block-file.has-background {
+	padding: 0.5rem;
+}
+
+.wc-block-cart-item__remove-link {
+	text-decoration: none !important;
+}
+
+a.wp-block-latest-posts__post-title {
+	text-decoration: none;
+}
+
+.wp-block-latest-comments__comment a {
+	text-decoration: none;
+}
+
+.has-background.wp-block-read-more {
+	padding: 0.25em 1.375em;
+}
+
+.wc-block-components-product-badge {
+    font-size: 1rem !important;
+}
+
+.wc-block-components-totals-coupon-link {
+	text-decoration: none;
+}
+
+.wc-block-grid__product-price.price ins {
+	line-height: 18px;
+}
+
+.wc-block-components-product-badge {
+    text-decoration: none;
+}
+
+.wp-block-file a {
+	line-height: 18px;
+}
+
+.wc-block-components-totals-coupon-link {
+    line-height: 18px;
+}
+
+.wp-block-comment-author-name a {
+    color: inherit;
+}
+
+.wp-block-comment-date span a {
+    color: inherit;
+}
+
+.wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link {
+	text-decoration: none;
+}
+
+.wc-block-mini-cart__empty-cart-wrapper .wc-block-mini-cart__shopping-button:hover	{
+	color: #fff;
+}
+
+.wp-block-page-list a:hover,
+.wp-block-page-list a:focus {
+	color: inherit;
+}
+
+.wp-block-page-list {
+	list-style: none;
+}
+
+.wp-block-page-list a {
+	font-weight: 600;
+}
+
+.wp-block-social-links .wp-social-link:last-child {
+	margin-bottom: 10px;
+}
+
+.wp-block-social-links .wp-social-link a {
+	box-shadow: none;
+}
+
+.wp-block-calendar table th {
+	font-weight: 600;
+}
+
+.widget .wp-block-read-more {
+	font-weight: 500;
+}
+
+.entry-content blockquote cite a:hover,
+.entry-content blockquote cite a:focus {
+	text-decoration: underline;
+}
+
+.widget .wp-block-group ul li a {
+	text-decoration: none;
+}
+
+.wp-block-list.has-background {
+	padding: 1.25em 2.375em;
+}
+
+.wp-block-preformatted.has-background {
+	padding: 1em;
+}
+
+.sidebar .widget .wp-block-group .is-vertical a {
+	color: inherit;
+}
+
+.footer-sidebar .widget.widget_block .wp-block-group p a {
+	color: inherit;
+}
+
+.wp-block-page-list.has-background {
+	padding: 1rem;
+}
+
+.wp-block-page-list p a {
+	padding: 1rem;
+}
+
+.wp-block-post-author img {
+    border-radius: 100%;
+}
+
+a.wp-block-button__link:focus {
+	color: #fff;
+	text-decoration: none;
+}
+
+.post.grid-view-news-area ul.wp-block-rss {
+	list-style: disc;
+}
+
+.post .wp-block-archives li {
+	padding-bottom: 0.625rem;
+}
+
+.widget .wp-block-embed .wp-element-caption a {
+	color: inherit;
+}
+
+.sidebar .widget .textwidget a span{
+	color: inherit;
+}
+
+.wp-block-file .wp-block-file__button {
+   text-decoration: none;
+   border: none;
+}
+
+select:focus,
+.form-control:focus {
+	border-color: rgb(255, 33, 79);
+	box-shadow: 0 0 5px rgba(255, 33, 79, 1);
+}
+
+.input-group > .form-control:focus,
+.input-group > .custom-select:focus,
+.input-group > .custom-file:focus {
+	z-index: 0;
+}
+
+.sidebar .widget .wp-block-group .wp-block-embed {
+	margin: 0;
+}
+
+table.wc-block-cart-items .wc-block-cart-items__row .wc-block-cart-item__quantity .wc-block-cart-item__remove-link {
+ text-decoration: none !important;
+}
+
+.footer-sidebar .widget .wp-block-group .wp-block-verse {
+ 	    background: #202020;
+ 	    color: #cccccc;
+}
+
+.widget .wp-block-quote {
+	color: inherit;
+}
+
+.sidebar .widget .wp-block-group .wp-block-preformatted a {
+	text-decoration: underline;
+}
+
+.entry-content ul.wp-block-post-template li.wp-block-post:hover {
+	box-shadow: none;
+}
+
+.wp-block-image .alignleft figcaption {   
+	text-align: left; 
+}
+
+.wp-block-button.is-style-outline a.wp-block-button__link {
+    color: inherit;
+}
+
+.wp-block-button.is-style-outline a.wp-block-button__link {
+ 	border-color: inherit;
+}

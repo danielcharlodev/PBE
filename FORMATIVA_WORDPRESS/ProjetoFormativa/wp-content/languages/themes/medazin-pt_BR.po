@@ -1,0 +1,740 @@
+# Translation of Themes - Medazin in Portuguese (Brazil)
+# This file is distributed under the same license as the Themes - Medazin package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-01-03 14:35:36+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: pt_BR\n"
+"Project-Id-Version: Themes - Medazin\n"
+
+#. Description of the theme
+#: style.css
+#, gp-priority: high
+msgid "Medazin health & medical WordPress theme. It has come with predefined Sections, Which helps you to build your own professional medical website. Medazin based on in-depth research into hospital, clinic, dentist, dermatology, dental, cosmetology, plastic surgery, laser surgery, dietitian, chiropractic, rehab, pharmacy, veterinary or any medical business. View the demo of Medazin Pro https://www.nayrathemes.com/demo/pro/?theme=medazin"
+msgstr "Tema WordPress médico e de saúde Medazin. Ele vem com seções predefinidas, que ajudam você a construir seu próprio site médico profissional. Medazin com base em pesquisas aprofundadas em hospitais, clínicas, dentistas, dermatologia, odontologia, cosmetologia, cirurgia plástica, cirurgia a laser, nutricionista, quiropraxia, reabilitação, farmácia, veterinária ou qualquer negócio médico. Veja a demonstração do Medazin Pro https://www.nayrathemes.com/demo/pro/?theme=medazin"
+
+#. Theme Name of the theme
+#: style.css
+#, gp-priority: high
+msgid "Medazin"
+msgstr "Medazin"
+
+#: inc/customizer/medazin-premium.php:9 inc/customizer/medazin-premium.php:31
+msgid "Upgrade to Pro"
+msgstr "Atualize para o Pro"
+
+#: inc/customizer/medazin-premium.php:25
+msgid "View Documentation"
+msgstr "Ver documentação"
+
+#: inc/customizer/medazin-premium.php:27
+msgid "Get Support"
+msgstr "Get Support"
+
+#: inc/customizer/medazin-premium.php:29
+msgid "Free Vs Pro"
+msgstr "Free Vs Pro"
+
+#: inc/customizer/medazin-premium.php:33
+msgid "Show Some Love"
+msgstr "Demonstre amor"
+
+#: 404.php:19
+msgid "4"
+msgstr "4"
+
+#: 404.php:20
+msgid "Something Went Wrong"
+msgstr "Algo deu errado"
+
+#: 404.php:21
+msgid "404 Error:"
+msgstr "Erro 404:"
+
+#: 404.php:21
+msgid "The Page Doesn't Exist"
+msgstr "A página não existe"
+
+#: 404.php:23
+msgid "Go Back To Home"
+msgstr "Voltar para início"
+
+#: comments.php:41 comments.php:62
+msgid "Comment navigation"
+msgstr "Navegação de comentários"
+
+#: comments.php:44 comments.php:64
+msgid "Older Comments"
+msgstr "Comentários mais antigos"
+
+#: comments.php:45 comments.php:65
+msgid "Newer Comments"
+msgstr "Comentários mais recentes"
+
+#: comments.php:77
+msgid "Comments are closed."
+msgstr "Os comentários estão fechados."
+
+#: footer.php:63
+msgid "<a href=\"#\">Medazin</a>"
+msgstr "<a href=\"#\">Medazin</a>"
+
+#: functions.php:51
+msgid "Primary Menu"
+msgstr "Menu principal"
+
+#: header.php:18
+msgid "Skip to content"
+msgstr "Pular para o conteúdo"
+
+#: inc/breadcrumb/breadcrumb.php:4 inc/breadcrumb/breadcrumb.php:7
+msgid "1"
+msgstr "1"
+
+#: inc/breadcrumb/breadcrumb.php:6
+msgid "Home"
+msgstr "Home"
+
+#: inc/breadcrumb/breadcrumb.php:26
+msgid "Archive by category"
+msgstr "Arquivo por categoria"
+
+#: inc/breadcrumb/breadcrumb.php:32
+msgid "Search results for "
+msgstr "Search results for "
+
+#: inc/breadcrumb/breadcrumb.php:132
+msgid "Posts tagged "
+msgstr "Posts tagged "
+
+#: inc/breadcrumb/breadcrumb.php:138
+msgid "Articles posted by "
+msgstr "Article posted by "
+
+#: inc/breadcrumb/breadcrumb.php:142
+msgid "Error 404 "
+msgstr "Error 404 "
+
+#: inc/breadcrumb/breadcrumb.php:147
+msgid "Page"
+msgstr "Página"
+
+#: inc/class-wp-bootstrap-navwalker.php:365
+msgid "Add a menu"
+msgstr "Adicionar ao menu"
+
+#: inc/customizer-notify/medazin-customizer-notify.php:114
+msgid "Activating"
+msgstr "Ativar"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:40
+msgid "Add new field"
+msgstr "Adicione um novo campo"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:45
+msgid "Customizer Repeater"
+msgstr "Customiser Repeater"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:332
+#: inc/customizer-repeater/class/customizer-repeater-control.php:532
+#: inc/customizer/medazin-blog.php:88
+msgid "Title"
+msgstr "Título"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:340
+#: inc/customizer-repeater/class/customizer-repeater-control.php:540
+msgid "Subtitle"
+msgstr "Legenda"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:348
+#: inc/customizer-repeater/class/customizer-repeater-control.php:549
+msgid "Subtitle 2"
+msgstr "Subtítulo 2"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:356
+#: inc/customizer-repeater/class/customizer-repeater-control.php:557
+msgid "Subtitle 3"
+msgstr "Subtítulo 3"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:364
+#: inc/customizer-repeater/class/customizer-repeater-control.php:565
+msgid "Subtitle 4"
+msgstr "Subtítulo 4"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:372
+#: inc/customizer-repeater/class/customizer-repeater-control.php:573
+msgid "Subtitle 5"
+msgstr "Subtítulo 5"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:380
+#: inc/customizer-repeater/class/customizer-repeater-control.php:581
+#: inc/customizer/medazin-blog.php:109
+msgid "Description"
+msgstr "Descrição"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:387
+#: inc/customizer-repeater/class/customizer-repeater-control.php:588
+msgid "Button Label"
+msgstr "Rótulo do botão"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:394
+msgid "skills"
+msgstr "habilidades"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:402
+#: inc/customizer-repeater/class/customizer-repeater-control.php:602
+msgid "Button Text"
+msgstr "Texto do botão"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:413
+#: inc/customizer-repeater/class/customizer-repeater-control.php:612
+#: inc/customizer-repeater/class/customizer-repeater-control.php:841
+#: inc/customizer-repeater/class/customizer-repeater-control.php:863
+msgid "Link"
+msgstr "Link"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:427
+#: inc/customizer-repeater/class/customizer-repeater-control.php:625
+msgid "Video Url"
+msgstr "URL de vídeo"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:457
+#: inc/customizer-repeater/class/customizer-repeater-control.php:524
+msgid "Color"
+msgstr "Cor"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:467
+#: inc/customizer-repeater/class/customizer-repeater-control.php:640
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:475
+#: inc/customizer-repeater/class/customizer-repeater-control.php:649
+msgid "Designation"
+msgstr "Designação"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:491
+msgid "Delete %s"
+msgstr "Excluir %s"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:595
+msgid "skill"
+msgstr "habilidade"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:660
+msgid "Delete field"
+msgstr "Delete field"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:697
+msgid "Open link in new tab:"
+msgstr "Abrir link em uma nova aba:"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:708
+#: inc/customizer-repeater/class/customizer-repeater-control.php:817
+msgid "Icon"
+msgstr "Ícone"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:714
+msgid "Note: Some icons may not be displayed here. You can see the full list of icons at %1$s."
+msgstr "Nota: Alguns ícones talvez não sejam exibidos aqui. Você pode ver a lista completa de ícones em %1$s."
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:715
+msgid "http://fontawesome.io/icons/"
+msgstr "http://fontawesome.io/icons/"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:750
+#: inc/customizer-repeater/class/customizer-repeater-control.php:818
+msgid "Image"
+msgstr "Imagem"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:753
+#: inc/customizer-repeater/class/customizer-repeater-control.php:782
+msgid "Upload Image"
+msgstr "Upload Image"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:779
+msgid "Slider Image"
+msgstr "Imagem deslizante"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:791
+msgid "Slide Align"
+msgstr "Alinhar slide"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:795
+msgid "Left"
+msgstr "Esquerda"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:799
+msgid "Right"
+msgstr "Direita"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:803
+msgid "Center"
+msgstr "Centro"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:814
+msgid "Image type"
+msgstr "Tipo de imagem"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:819
+msgid "None"
+msgstr "Nenhum"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:827
+msgid "Social icons"
+msgstr "Social icons"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:844
+#: inc/customizer-repeater/class/customizer-repeater-control.php:874
+msgid "Remove Icon"
+msgstr "Remover ícone"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:849
+#: inc/customizer-repeater/class/customizer-repeater-control.php:882
+msgid "Add Icon"
+msgstr "Adicionar ícone"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:904
+msgid "Service 1"
+msgstr "Serviço 1"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:908
+msgid "Service 2"
+msgstr "Serviço 2"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:912
+msgid "Service 3"
+msgstr "Serviço 3"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:916
+msgid "Service 4"
+msgstr "Serviço 4"
+
+#: inc/customizer-repeater/class/customizer-repeater-control.php:920
+msgid "Service 5"
+msgstr "Serviço 5"
+
+#: inc/customizer/customizer_recommended_plugin.php:10
+msgid "Install and activate <strong>Classic Widget</strong> plugin for taking full advantage of all the features this theme has to offer."
+msgstr "Instale e ative o plug-in <strong>Classic Widget</strong> para aproveitar ao máximo todos os recursos que esse tema oferece."
+
+#: inc/customizer/customizer_recommended_plugin.php:14
+msgid "Install and activate <strong>Cleverfox</strong> plugin for taking full advantage of all the features this theme has to offer."
+msgstr "Instale e ative o plug-in <strong>Clever Fox</strong> para aproveitar ao máximo todos os recursos que esse tema oferece."
+
+#: inc/customizer/customizer_recommended_plugin.php:18
+msgid "Recommended Actions"
+msgstr "Ações recomendadas"
+
+#: inc/customizer/customizer_recommended_plugin.php:19
+msgid "Recommended Plugin"
+msgstr "Plugins recomendados"
+
+#: inc/customizer/customizer_recommended_plugin.php:20
+msgid "Install and Activate"
+msgstr "Instalar e ativar"
+
+#: inc/customizer/customizer_recommended_plugin.php:21
+msgid "Activate"
+msgstr "Activate"
+
+#: inc/customizer/customizer_recommended_plugin.php:22
+msgid "Deactivate"
+msgstr "Desativar"
+
+#: inc/customizer/medazin-blog.php:9
+msgid "Blog Section"
+msgstr "Seção Blog"
+
+#: inc/customizer/medazin-blog.php:29
+msgid "Setting"
+msgstr "Setting"
+
+#: inc/customizer/medazin-blog.php:49
+msgid "Hide / Show"
+msgstr "Ocultar/Mostrar"
+
+#: inc/customizer/medazin-blog.php:68 inc/customizer/medazin-header.php:12
+msgid "Header"
+msgstr "Cabeçalho"
+
+#: inc/customizer/medazin-blog.php:77
+msgid "Our Blog"
+msgstr "Nosso blog"
+
+#: inc/customizer/medazin-blog.php:98
+msgid "Blog"
+msgstr "Blog"
+
+#: inc/customizer/medazin-blog.php:130
+msgid "Content"
+msgstr "Conteúdo"
+
+#: inc/customizer/medazin-blog.php:149
+msgid "No of Posts Display"
+msgstr "Nº de posts para mostrar"
+
+#: inc/customizer/medazin-footer.php:10
+msgid "Footer"
+msgstr "Rodapé"
+
+#: inc/customizer/medazin-footer.php:17
+msgid "Below Footer"
+msgstr "Abaixo do rodapé"
+
+#: inc/customizer/medazin-footer.php:36
+msgid "Logo"
+msgstr "Logo"
+
+#: inc/customizer/medazin-footer.php:44
+msgid "Copyright &copy; [current_year] [site_title] | Powered by [theme_author]"
+msgstr "Copyright &copy; [current_year] [site_title] | Distribuído por [theme_author]"
+
+#: inc/customizer/medazin-footer.php:57
+msgid "Copyright"
+msgstr "Créditos"
+
+#: inc/customizer/medazin-footer.php:70
+msgid "Footer Widget Area"
+msgstr "Área de Widgets do rodapé"
+
+#: inc/customizer/medazin-general.php:7
+msgid "General"
+msgstr "Geral"
+
+#: inc/customizer/medazin-general.php:17
+msgid "Background Elements"
+msgstr "Elementos de fundo"
+
+#: inc/customizer/medazin-general.php:36
+msgid "Hide / Show Background Elements"
+msgstr "Ocultar/Mostrar Elementos de Fundo"
+
+#: inc/customizer/medazin-general.php:47
+msgid "Scroller"
+msgstr "Rolar"
+
+#: inc/customizer/medazin-general.php:66
+msgid "Hide / Show Scroller"
+msgstr "Ocultar / Mostrar rolagem"
+
+#: inc/customizer/medazin-general.php:77
+msgid "Breadcrumb"
+msgstr "Caminho"
+
+#: inc/customizer/medazin-general.php:97
+msgid "Settings"
+msgstr "Configurações"
+
+#: inc/customizer/medazin-general.php:116
+msgid "Hide / Show Section"
+msgstr "Ocultar / Mostrar seção"
+
+#: inc/customizer/medazin-general.php:137
+msgid "Enable Water Effect on Breadcrumb?"
+msgstr "Ativar efeito de água no caminho de post?"
+
+#: inc/customizer/medazin-general.php:158
+msgid "Background"
+msgstr "Fundo"
+
+#: inc/customizer/medazin-general.php:176
+msgid "Background Image"
+msgstr "Imagem de fundo"
+
+#: inc/customizer/medazin-general.php:195
+msgid "Background Attachment"
+msgstr "Anexo de Fundo"
+
+#: inc/customizer/medazin-general.php:200
+msgid "Inherit"
+msgstr "Herdar"
+
+#: inc/customizer/medazin-general.php:201
+msgid "Scroll"
+msgstr "Rolar"
+
+#: inc/customizer/medazin-general.php:202
+msgid "Fixed"
+msgstr "Fixo"
+
+#: inc/customizer/medazin-general.php:214
+msgid "Container"
+msgstr "Container"
+
+#: inc/customizer/medazin-general.php:234
+msgid "Container Width"
+msgstr "Largura do contentor"
+
+#: inc/customizer/medazin-header.php:23
+msgid "Site Identity"
+msgstr "Identidade do site"
+
+#: inc/customizer/medazin-header.php:36
+msgid "Section Documentation"
+msgstr "Documentação da seção"
+
+#: inc/customizer/medazin-header.php:37
+msgid "Click Here"
+msgstr "Clique aqui"
+
+#: inc/customizer/medazin-header.php:55 inc/customizer/medazin-header.php:58
+msgid "Site identity Documentation Link"
+msgstr "Link da documentação da identidade do site"
+
+#: inc/customizer/medazin-header.php:69 inc/customizer/medazin-header.php:88
+msgid "Sticky Header"
+msgstr "Cabeçalho fixo"
+
+#: inc/customizer/medazin-header.php:105
+msgid "Hide/Show"
+msgstr "Ocultar/Mostrar"
+
+#: inc/extras.php:82 inc/extras.php:153
+msgid "View your shopping cart"
+msgstr "Visualize seu carrinho de compras"
+
+#: inc/extras.php:96 inc/extras.php:162 woocommerce/cart/mini-cart.php:25
+#: woocommerce/cart/mini-cart.php:139
+msgid "0"
+msgstr ""
+
+#: inc/extras.php:210
+msgid "Theme Screenshot"
+msgstr "Tela do tema"
+
+#. translators: 1: welcome page link starting html tag, 2: welcome page link
+#. ending html tag.
+#: inc/extras.php:218
+msgid "Welcome! Thank you for choosing %1$s!"
+msgstr "Bem-vinda! Obrigado por escolher %1$s!"
+
+#: inc/sidebar/sidebar.php:18
+msgid "Sidebar Widget Area"
+msgstr "Área do Widget da Barra Lateral"
+
+#: inc/sidebar/sidebar.php:20
+msgid "The Primary Widget Area"
+msgstr "Área de widgets primária"
+
+#: inc/sidebar/sidebar.php:29
+msgid "Footer 1"
+msgstr "Rodapé 1"
+
+#: inc/sidebar/sidebar.php:31
+msgid "The Footer Widget Area 1"
+msgstr "A área 1 do widget de rodapé"
+
+#: inc/sidebar/sidebar.php:39
+msgid "Footer 2"
+msgstr "Rodapé 2"
+
+#: inc/sidebar/sidebar.php:41
+msgid "The Footer Widget Area 2"
+msgstr "A área 2 do widget de rodapé"
+
+#: inc/sidebar/sidebar.php:49
+msgid "Footer 3"
+msgstr "Rodapé 3"
+
+#: inc/sidebar/sidebar.php:51
+msgid "The Footer Widget Area 3"
+msgstr "A área 3 do widget de rodapé"
+
+#: inc/sidebar/sidebar.php:59
+msgid "Footer 4"
+msgstr "Rodapé 4"
+
+#: inc/sidebar/sidebar.php:61
+msgid "The Footer Widget Area 4"
+msgstr "A área 4 do widget de rodapé"
+
+#: inc/sidebar/sidebar.php:69
+msgid "WooCommerce Widget Area"
+msgstr "Área do Widget WooCommerce"
+
+#: inc/sidebar/sidebar.php:71
+msgid "This Widget area for WooCommerce Widget"
+msgstr "Esta área de widget para WooCommerce Widget"
+
+#: inc/template-tags.php:28
+msgctxt "post date"
+msgid "Posted on %s"
+msgstr "Posted on %s"
+
+#: inc/template-tags.php:33
+msgctxt "post author"
+msgid "by %s"
+msgstr "by %s"
+
+#. translators: used between list items, there is a space after the comma
+#: inc/template-tags.php:48 inc/template-tags.php:54
+msgid ", "
+msgstr ", "
+
+#: inc/template-tags.php:50
+msgid "Posted in %1$s"
+msgstr "Posted in %1$s"
+
+#: inc/template-tags.php:56
+msgid "Tagged %1$s"
+msgstr "Marcado %1$s"
+
+#. translators: %s: post title
+#: inc/template-tags.php:63
+msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
+msgstr "Deixe um comentário<span class=\"screen-reader-text\"> em %s</span>"
+
+#. translators: %s: Name of current post
+#: inc/template-tags.php:70
+msgid "Edit %s"
+msgstr "Editar %s"
+
+#: template-parts/content/content-none.php:14
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+
+#: template-parts/content/content-none.php:16
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "Sorry, but nothing matched your search terms. Please try again with different keywords."
+
+#: template-parts/content/content-none.php:18
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+
+#: template-parts/content/content-page.php:35
+msgid "Author Image"
+msgstr "Imagem do autor"
+
+#: template-parts/content/content-page.php:60
+#: template-parts/content/content-search.php:50
+#: template-parts/sections/section-blog.php:82
+msgid "<span>Read More</span><i class=\"fa fa-plus\"></i>"
+msgstr "<span>Leia mais</span><i class=\"fa fa-plus\"></i>"
+
+#: template-parts/content/content-search.php:33
+msgid "Comment"
+msgstr "Comentário"
+
+#. translators: %s: Name of current post.
+#: template-parts/content/content.php:33
+msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Continue lendo %s <span class=\"meta-nav\">&rarr;</span>"
+
+#: page.php:50 template-parts/content/content.php:38
+msgid "Pages:"
+msgstr "Pages:"
+
+#: template-parts/sections/section-breadcrumb.php:30
+msgid "Daily Archives: %s"
+msgstr "Arquivo diários: %s"
+
+#: template-parts/sections/section-breadcrumb.php:34
+msgid "Monthly Archives: %s"
+msgstr "Arquivo mensal: %s"
+
+#: template-parts/sections/section-breadcrumb.php:38
+msgid "Yearly Archives: %s"
+msgstr "Arquivo anual: %s"
+
+#: template-parts/sections/section-breadcrumb.php:42
+msgid "Category Archives: %s"
+msgstr "Arquivo da categoria: %s"
+
+#: template-parts/sections/section-breadcrumb.php:46
+msgid "Tag Archives: %s"
+msgstr "Arquivo da tag: %s"
+
+#: template-parts/sections/section-breadcrumb.php:50
+msgid "Error 404"
+msgstr "Erro 404"
+
+#: template-parts/sections/section-breadcrumb.php:54
+msgid "Author: %s"
+msgstr "Autor: %s"
+
+#: template-parts/sections/section-breadcrumb.php:58
+msgid "Portfolio Categories: %s"
+msgstr "Categorias de portfólio: %s"
+
+#: template-parts/sections/section-breadcrumb.php:62
+msgid "Pricing Categories: %s"
+msgstr "Categorias de preço: %s"
+
+#: template-parts/sections/section-header.php:38
+msgid "Site Search"
+msgstr "Site Search"
+
+#: template-parts/sections/section-header.php:38
+msgid "Type To Search"
+msgstr "Type To Search"
+
+#: template-parts/sections/section-header.php:68
+msgid "Menu Collaped"
+msgstr "Recolher Menu"
+
+#: template-parts/sections/section-header.php:77
+msgid "Header Close Menu"
+msgstr "Cabeçalho Fechar Menu"
+
+#. Template Name of the theme
+msgid "Homepage"
+msgstr "Página inicial"
+
+#. Template Name of the theme
+msgid "Fullwidth Page"
+msgstr "Página de largura completa"
+
+#: woocommerce/cart/mini-cart.php:32 woocommerce/cart/mini-cart.php:146
+msgid "Total:"
+msgstr "Total:"
+
+#: woocommerce/cart/mini-cart.php:57 woocommerce/cart/mini-cart.php:171
+msgid "Remove this item"
+msgstr "Remover este item"
+
+#: woocommerce/cart/mini-cart.php:98 woocommerce/cart/mini-cart.php:212
+msgid "Checkout"
+msgstr "Checkout"
+
+#: woocommerce/cart/mini-cart.php:104 woocommerce/cart/mini-cart.php:218
+msgid "No products in the cart."
+msgstr "Nenhum produto no carrinho."
+
+#: woocommerce/content-product.php:33
+msgid "Sale"
+msgstr "Venda"
+
+#: woocommerce/content-product.php:52
+msgid "Rated %s out of 5"
+msgstr "Avaliado %s de 5"
+
+#: woocommerce/content-product.php:52
+msgid "out of 5"
+msgstr "de 5"
+
+#: inc/extras.php:222
+msgid "Install and activate %1$sClever Fox%2$s plugin for taking full advantage of all the features this theme has to offer."
+msgstr "Instale e ative o plugin %1$sClever Fox%2$s para aproveitar ao máximo todos os recursos que esse tema oferece."
+
+#. Theme URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://www.nayrathemes.com/medazin-free/"
+msgstr "https://www.nayrathemes.com/medazin-free/"
+
+#. Author of the theme
+#: style.css
+#, gp-priority: low
+msgid "Nayra Themes"
+msgstr "Nayra Themes"
+
+#. Author URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://www.nayrathemes.com/"
+msgstr "https://www.nayrathemes.com/"

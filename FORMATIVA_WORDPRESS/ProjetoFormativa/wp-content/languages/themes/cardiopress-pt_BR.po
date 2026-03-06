@@ -1,0 +1,67 @@
+# Translation of Themes - CardioPress in Portuguese (Brazil)
+# This file is distributed under the same license as the Themes - CardioPress package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-08-12 20:04:46+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: pt_BR\n"
+"Project-Id-Version: Themes - CardioPress\n"
+
+#. Description of the theme
+#: style.css
+#, gp-priority: high
+msgid "CardioPress health & medical WordPress theme. It has come with predefined Sections, Which helps you to build your own professional medical website. CardioPress based on in-depth research into hospital, clinic, dentist, dermatology, dental, cosmetology, plastic surgery, laser surgery, dietitian, chiropractic, rehab, pharmacy, veterinary or any medical business. View the demo of CardioPress Pro https://www.nayrathemes.com/demo/pro/?theme=cardiopress"
+msgstr "Tema WordPress médico e de saúde CardioPress. Ele vem com seções predefinidas, que ajudam você a construir seu próprio site médico profissional. CardioPress é baseado em pesquisas aprofundadas em hospitais, clínicas, dentistas, dermatologia, odontologia, cosmetologia, cirurgia plástica, cirurgia a laser, nutricionista, quiropraxia, reabilitação, farmácia, veterinária ou qualquer negócio médico. Veja a demonstração do CardioPress Pro https://www.nayrathemes.com/demo/pro/?theme=cardiopress"
+
+#. Theme Name of the theme
+#: style.css
+#, gp-priority: high
+msgid "CardioPress"
+msgstr "CardioPress"
+
+#: inc/customize/cardiopress-premium.php:36
+msgid "Show Some Love"
+msgstr "Demonstre amor"
+
+#: inc/customize/cardiopress-premium.php:32
+msgid "Free Vs Pro"
+msgstr "Grátis Vs Pro"
+
+#: inc/customize/cardiopress-premium.php:30
+msgid "Get Support"
+msgstr "Get Support"
+
+#: inc/customize/cardiopress-premium.php:28
+msgid "View Documentation"
+msgstr "Ver documentação"
+
+#: inc/customize/cardiopress-premium.php:12
+#: inc/customize/cardiopress-premium.php:34
+msgid "Upgrade to Pro"
+msgstr "Atualize para o Pro"
+
+#: header.php:18
+msgid "Skip to content"
+msgstr "Pular para o conteúdo"
+
+#. Theme URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://www.nayrathemes.com/cardiopress-free/"
+msgstr "https://www.nayrathemes.com/cardiopress-free/"
+
+#. Author URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://www.nayrathemes.com/"
+msgstr "https://www.nayrathemes.com/"
+
+#. Author of the theme
+#: style.css
+#, gp-priority: low
+msgid "Nayra Themes"
+msgstr "Nayra Themes"
