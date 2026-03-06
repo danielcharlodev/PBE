@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\FornecedoresController;
 use App\Http\Controllers\PedidosController;
+use App\Http\Controllers\ProdutosController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +27,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fornecedores', [FornecedoresController::class, 'index'])
         ->name('fornecedores.index');
 
+    Route::get('/produtos', [ProdutosController::class, 'index'])
+        ->name('produtos.index');
+
     Route::get('/pedidos', [PedidosController::class, 'index'])
         ->name('pedidos.index');
 
@@ -34,7 +38,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/pedidos', [PedidosController::class, 'store'])
         ->name('pedidos.store');
-
 });
 
 Route::middleware('auth')->group(function () {

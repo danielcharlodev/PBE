@@ -13,27 +13,33 @@
                     </a>
                 </div>
 
-                <!-- Links (DESKTOP) -->
+                <!-- LINKS DESKTOP -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        Dashboard
                     </x-nav-link>
 
                     <x-nav-link :href="route('clientes.index')" :active="request()->routeIs('clientes.*')">
-                        {{ __('Clientes') }}
+                        Clientes
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('produtos.index')" :active="request()->routeIs('produtos.*')">
+                        Produtos
                     </x-nav-link>
 
                     <x-nav-link :href="route('estoque.index')" :active="request()->routeIs('estoque.*')">
-                        {{ __('Estoque') }}
+                        Estoque
                     </x-nav-link>
 
                     <x-nav-link :href="route('fornecedores.index')" :active="request()->routeIs('fornecedores.*')">
-                        {{ __('Fornecedores') }}
+                        Fornecedores
                     </x-nav-link>
 
                     <x-nav-link :href="route('pedidos.index')" :active="request()->routeIs('pedidos.*')">
-                        {{ __('Pedidos') }}
+                        Pedidos
                     </x-nav-link>
+
                 </div>
             </div>
 
@@ -68,7 +74,7 @@
                     <x-slot name="content">
                         @auth
                             <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
+                                Profile
                             </x-dropdown-link>
 
                             <form method="POST" action="{{ route('logout') }}">
@@ -76,7 +82,7 @@
                                 <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                     this.closest('form').submit();">
-                                    {{ __('Log Out') }}
+                                    Log Out
                                 </x-dropdown-link>
                             </form>
                         @endauth
@@ -110,27 +116,35 @@
     <!-- MOBILE MENU -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-white border-t">
 
-        <!-- LINKS (MOBILE) -->
         <div class="pt-2 pb-3 space-y-1">
+
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                Dashboard
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('clientes.index')" :active="request()->routeIs('clientes.*')">
-                {{ __('Clientes') }}
+                Clientes
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('produtos.index')" :active="request()->routeIs('produtos.*')">
+                Produtos
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('estoque.index')" :active="request()->routeIs('estoque.*')">
-                {{ __('Estoque') }}
+                Estoque
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('fornecedores.index')" :active="request()->routeIs('fornecedores.*')">
-                {{ __('Fornecedores') }}
+                Fornecedores
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('pedidos.index')" :active="request()->routeIs('pedidos.*')">
+                Pedidos
+            </x-responsive-nav-link>
+
         </div>
 
         <div class="pt-4 pb-1 border-t border-gray-200 px-4">
-
             @auth
                 <div class="font-medium text-base text-gray-800">
                     {{ Auth::user()->name }}
@@ -138,29 +152,8 @@
                 <div class="font-medium text-sm text-gray-500">
                     {{ Auth::user()->email }}
                 </div>
-            @else
-                <div class="font-medium text-base text-gray-800">
-                    Convidado
-                </div>
             @endauth
-
-            <div class="mt-3 space-y-1">
-                @auth
-                    <x-responsive-nav-link :href="route('profile.edit')">
-                        {{ __('Profile') }}
-                    </x-responsive-nav-link>
-
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                            this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                        </x-responsive-nav-link>
-                    </form>
-                @endauth
-            </div>
-
         </div>
+
     </div>
 </nav>
