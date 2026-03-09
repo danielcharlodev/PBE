@@ -2,12 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Clientes extends Model
 {
-    use HasFactory; // Agora o Laravel vai encontrar o que precisa
+    use HasFactory;
 
-    protected $fillable = ['nome', 'cpf', 'telefone', 'reserva'];
+    protected $table = 'clientes';
+
+    protected $fillable = [
+        'nome',
+        'cpf',
+        'email',
+        'telefone',
+        'endereco',
+        'reserva',
+    ];
 }

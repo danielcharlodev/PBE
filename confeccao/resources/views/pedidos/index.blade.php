@@ -1,21 +1,63 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 style="text-align:center; font-size:32px; font-weight:800; color:#1f2937;">
-            Pedidos
-        </h2>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
+            <h2 style="font-size:32px; font-weight:800; color:#1f2937;">
+                Pedidos
+            </h2>
+
+            <a href="{{ route('pedidos.create') }}"
+               style="
+                    background:linear-gradient(135deg,#22c55e,#14b8a6);
+                    color:white;
+                    padding:14px 28px;
+                    border-radius:999px;
+                    font-weight:700;
+                    font-size:14px;
+                    letter-spacing:1px;
+                    text-transform:uppercase;
+                    text-decoration:none;
+                    box-shadow:0 10px 20px rgba(34,197,94,0.25);
+                    transition:all 0.25s ease;
+               "
+               onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 30px rgba(34,197,94,0.35)'"
+               onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 10px 20px rgba(34,197,94,0.25)'"
+            >
+                + Novo Pedido
+            </a>
+        </div>
     </x-slot>
 
     <div style="background:#f3f4f6; min-height:100vh; padding:40px 0;">
         <div style="max-width:1200px; margin:0 auto; padding:0 24px;">
 
+            @if(session('success'))
+                <div style="
+                    max-width:700px;
+                    margin:0 auto 30px auto;
+                    background:#dcfce7;
+                    color:#166534;
+                    padding:16px 20px;
+                    border-radius:16px;
+                    font-weight:700;
+                    text-align:center;
+                    border:1px solid #bbf7d0;
+                    box-shadow:0 8px 20px rgba(0,0,0,0.05);
+                ">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <div style="text-align:center; margin-bottom:30px;">
                 <p style="font-size:20px; color:#4b5563;">
                     Total de pedidos:
-                    <span style="font-weight:700; color:#111827;">{{ $pedidos->count() }}</span>
+                    <span style="font-weight:700; color:#111827;">
+                        {{ $pedidos->count() }}
+                    </span>
                 </p>
             </div>
 
             @if($pedidos->count() > 0)
+
                 <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:32px; align-items:stretch;">
                     @foreach ($pedidos as $pedido)
                         @php
@@ -36,6 +78,11 @@
                                 $cor2 = '#06b6d4';
                                 $badgeBg = '#dbeafe';
                                 $badgeColor = '#1d4ed8';
+                            } elseif ($pedido->status === 'cancelado') {
+                                $cor1 = '#ef4444';
+                                $cor2 = '#f97316';
+                                $badgeBg = '#fee2e2';
+                                $badgeColor = '#b91c1c';
                             } else {
                                 $cor1 = '#6b7280';
                                 $cor2 = '#9ca3af';
@@ -86,20 +133,46 @@
                                     {{ $pedido->cliente->nome ?? 'Sem cliente' }}
                                 </h3>
 
-                                <p style="font-size:15px; color:#6b7280; margin-bottom:10px;">
-                                    Item: <strong style="color:#111827;">{{ $item?->estoque?->nome ?? '-' }}</strong>
+                                <p style="font-size:15px; color:#6b7280; margin-bottom:8px;">
+                                    Data:
+                                    <strong style="color:#111827;">
+                                        {{ $pedido->data_pedido ?? 'Não informada' }}
+                                    </strong>
                                 </p>
 
-                                <p style="font-size:15px; color:#6b7280; margin-bottom:10px;">
-                                    Quantidade: <strong style="color:#111827;">{{ $item?->quantidade ?? 0 }}</strong>
+                                <p style="font-size:15px; color:#6b7280; margin-bottom:8px;">
+                                    Item:
+                                    <strong style="color:#111827;">
+                                        {{ $item?->estoque?->nome ?? '-' }}
+                                    </strong>
                                 </p>
 
-                                <p style="font-size:15px; color:#6b7280; margin-bottom:10px;">
-                                    Reservada: <strong style="color:#111827;">{{ $item?->quantidade_reservada ?? 0 }}</strong>
+                                <p style="font-size:15px; color:#6b7280; margin-bottom:8px;">
+                                    Quantidade:
+                                    <strong style="color:#111827;">
+                                        {{ $item?->quantidade ?? 0 }}
+                                    </strong>
                                 </p>
 
-                                <p style="font-size:15px; color:#6b7280; margin-bottom:22px;">
-                                    Em falta: <strong style="color:#111827;">{{ $item?->quantidade_em_falta ?? 0 }}</strong>
+                                <p style="font-size:15px; color:#6b7280; margin-bottom:8px;">
+                                    Reservada:
+                                    <strong style="color:#111827;">
+                                        {{ $item?->quantidade_reservada ?? 0 }}
+                                    </strong>
+                                </p>
+
+                                <p style="font-size:15px; color:#6b7280; margin-bottom:8px;">
+                                    Em falta:
+                                    <strong style="color:#111827;">
+                                        {{ $item?->quantidade_em_falta ?? 0 }}
+                                    </strong>
+                                </p>
+
+                                <p style="font-size:15px; color:#6b7280; margin-bottom:20px;">
+                                    Preço unitário:
+                                    <strong style="color:#111827;">
+                                        R$ {{ number_format($item?->preco_unitario ?? 0, 2, ',', '.') }}
+                                    </strong>
                                 </p>
 
                                 <div>
@@ -121,13 +194,48 @@
                         </div>
                     @endforeach
                 </div>
+
             @else
-                <div style="max-width:700px; margin:0 auto; background:white; border-radius:24px; padding:48px 32px; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.08); border:1px solid #e5e7eb;">
+
+                <div style="
+                    max-width:700px;
+                    margin:0 auto;
+                    background:white;
+                    border-radius:24px;
+                    padding:48px 32px;
+                    text-align:center;
+                    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+                    border:1px solid #e5e7eb;
+                ">
                     <div style="font-size:52px; margin-bottom:14px;">🧾</div>
-                    <h3 style="font-size:28px; font-weight:800; color:#1f2937; margin-bottom:10px;">Nenhum pedido cadastrado</h3>
-                    <p style="font-size:16px; color:#6b7280;">Quando houver pedidos, eles aparecerão aqui em cards organizados.</p>
+
+                    <h3 style="font-size:28px; font-weight:800; color:#1f2937; margin-bottom:10px;">
+                        Nenhum pedido cadastrado
+                    </h3>
+
+                    <p style="font-size:16px; color:#6b7280; margin-bottom:25px;">
+                        Quando houver pedidos, eles aparecerão aqui organizados em cards.
+                    </p>
+
+                    <a href="{{ route('pedidos.create') }}"
+                       style="
+                            background:linear-gradient(135deg,#22c55e,#14b8a6);
+                            color:white;
+                            padding:14px 28px;
+                            border-radius:999px;
+                            font-weight:700;
+                            text-transform:uppercase;
+                            text-decoration:none;
+                            box-shadow:0 10px 20px rgba(34,197,94,0.25);
+                            transition:all 0.25s ease;
+                       "
+                    >
+                        Cadastrar primeiro pedido
+                    </a>
                 </div>
+
             @endif
+
         </div>
     </div>
 </x-app-layout>

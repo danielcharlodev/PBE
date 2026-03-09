@@ -1,12 +1,51 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 style="text-align:center; font-size:32px; font-weight:800; color:#1f2937;">
-            Estoque
-        </h2>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
+            <h2 style="font-size:32px; font-weight:800; color:#1f2937;">
+                Estoque
+            </h2>
+
+            <a href="{{ route('estoque.create') }}"
+               style="
+                    background:linear-gradient(135deg,#10b981,#14b8a6);
+                    color:white;
+                    padding:14px 28px;
+                    border-radius:999px;
+                    font-weight:700;
+                    font-size:14px;
+                    letter-spacing:1px;
+                    text-transform:uppercase;
+                    text-decoration:none;
+                    box-shadow:0 10px 20px rgba(16,185,129,0.25);
+                    transition:all 0.25s ease;
+               "
+               onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 30px rgba(16,185,129,0.35)'"
+               onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 10px 20px rgba(16,185,129,0.25)'"
+            >
+                + Novo Item
+            </a>
+        </div>
     </x-slot>
 
     <div style="background:#f3f4f6; min-height:100vh; padding:40px 0;">
         <div style="max-width:1200px; margin:0 auto; padding:0 24px;">
+
+            @if(session('success'))
+                <div style="
+                    max-width:700px;
+                    margin:0 auto 30px auto;
+                    background:#dcfce7;
+                    color:#166534;
+                    padding:16px 20px;
+                    border-radius:16px;
+                    font-weight:700;
+                    text-align:center;
+                    border:1px solid #bbf7d0;
+                    box-shadow:0 8px 20px rgba(0,0,0,0.05);
+                ">
+                    {{ session('success') }}
+                </div>
+            @endif
 
             <div style="text-align:center; margin-bottom:30px;">
                 <p style="font-size:20px; color:#4b5563;">
@@ -81,7 +120,7 @@
                                 </p>
 
                                 <p style="font-size:15px; color:#6b7280; margin-bottom:10px;">
-                                    Entrada: <strong style="color:#111827;">{{ $item->data_entrada }}</strong>
+                                    Entrada: <strong style="color:#111827;">{{ $item->data_entrada ?? 'Não informada' }}</strong>
                                 </p>
 
                                 <div style="margin-bottom:22px;">
@@ -110,10 +149,41 @@
                     @endforeach
                 </div>
             @else
-                <div style="max-width:700px; margin:0 auto; background:white; border-radius:24px; padding:48px 32px; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.08); border:1px solid #e5e7eb;">
+                <div style="
+                    max-width:700px;
+                    margin:0 auto;
+                    background:white;
+                    border-radius:24px;
+                    padding:48px 32px;
+                    text-align:center;
+                    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+                    border:1px solid #e5e7eb;
+                ">
                     <div style="font-size:52px; margin-bottom:14px;">📦</div>
-                    <h3 style="font-size:28px; font-weight:800; color:#1f2937; margin-bottom:10px;">Nenhum item em estoque</h3>
-                    <p style="font-size:16px; color:#6b7280;">Quando houver itens, eles aparecerão aqui em cards organizados.</p>
+
+                    <h3 style="font-size:28px; font-weight:800; color:#1f2937; margin-bottom:10px;">
+                        Nenhum item em estoque
+                    </h3>
+
+                    <p style="font-size:16px; color:#6b7280; margin-bottom:25px;">
+                        Quando houver itens, eles aparecerão aqui em cards organizados.
+                    </p>
+
+                    <a href="{{ route('estoque.create') }}"
+                       style="
+                            background:linear-gradient(135deg,#10b981,#14b8a6);
+                            color:white;
+                            padding:14px 28px;
+                            border-radius:999px;
+                            font-weight:700;
+                            text-transform:uppercase;
+                            text-decoration:none;
+                            box-shadow:0 10px 20px rgba(16,185,129,0.25);
+                            transition:all 0.25s ease;
+                       "
+                    >
+                        Cadastrar primeiro item
+                    </a>
                 </div>
             @endif
         </div>

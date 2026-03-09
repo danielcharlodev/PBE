@@ -21,23 +21,36 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/clientes', [ClientesController::class, 'index'])
         ->name('clientes.index');
 
+    Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
+
+    Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
+
     Route::get('/estoque', [EstoqueController::class, 'index'])
         ->name('estoque.index');
+
+    Route::get('/estoque/create', [EstoqueController::class, 'create'])->name('estoque.create');
+
+    Route::post('/estoque', [EstoqueController::class, 'store'])->name('estoque.store');
 
     Route::get('/fornecedores', [FornecedoresController::class, 'index'])
         ->name('fornecedores.index');
 
+    Route::get('/fornecedores/create', [FornecedoresController::class, 'create'])->name('fornecedores.create');
+
+    Route::post('/fornecedores', [FornecedoresController::class, 'store'])->name('fornecedores.store');
+
     Route::get('/produtos', [ProdutosController::class, 'index'])
         ->name('produtos.index');
 
-    Route::get('/pedidos', [PedidosController::class, 'index'])
-        ->name('pedidos.index');
+    Route::get('/produtos/create', [ProdutosController::class, 'create'])->name('produtos.create');
 
-    Route::get('/pedidos/create', [PedidosController::class, 'create'])
-        ->name('pedidos.create');
+    Route::post('/produtos', [ProdutosController::class, 'store'])->name('produtos.store');
 
-    Route::post('/pedidos', [PedidosController::class, 'store'])
-        ->name('pedidos.store');
+    Route::get('/pedidos', [PedidosController::class, 'index'])->name('pedidos.index');
+    
+    Route::get('/pedidos/create', [PedidosController::class, 'create'])->name('pedidos.create');
+
+    Route::post('/pedidos', [PedidosController::class, 'store'])->name('pedidos.store');
 });
 
 Route::middleware('auth')->group(function () {

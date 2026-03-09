@@ -32,16 +32,24 @@ class PedidosController extends Controller
     {
         $data = $request->validate([
             'cliente_id' => ['required', 'exists:clientes,id'],
-            'estoque_id' => ['required', 'exists:estoqu,id'],
+            'estoque_id' => ['required', 'exists:estoque,id'],
             'quantidade' => ['required', 'integer', 'min:1'],
+        ], [
+            'cliente_id.required' => 'Selecione um cliente.',
+            'cliente_id.exists' => 'Cliente inválido.',
+            'estoque_id.required' => 'Selecione um item do estoque.',
+            'estoque_id.exists' => 'Item do estoque inválido.',
+            'quantidade.required' => 'Informe a quantidade.',
+            'quantidade.integer' => 'A quantidade deve ser um número inteiro.',
+            'quantidade.min' => 'A quantidade mínima é 1.',
         ]);
 
         DB::transaction(function () use ($data) {
             $produto = Estoque::lockForUpdate()->findOrFail($data['estoque_id']);
 
             $disponivel = $produto->quantidade - $produto->reservado;
-
             $qtd = (int) $data['quantidade'];
+
             $reservar = max(0, min($disponivel, $qtd));
             $falta = max(0, $qtd - $reservar);
 
@@ -64,6 +72,8 @@ class PedidosController extends Controller
             $produto->save();
         });
 
-        return redirect()->route('pedidos.index');
+        return redirect()
+            ->route('pedidos.index')
+            ->with('success', 'Pedido cadastrado com sucesso!');
     }
 }
