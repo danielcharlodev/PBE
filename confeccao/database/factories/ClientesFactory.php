@@ -9,18 +9,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ClientesFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-           'nome' => fake()->name(),
-           'cpf' => fake()->unique()->numerify('###.###.###-##'),
-           'telefone' => fake('pt_BR')->cellphoneNumber(),
-           'reserva' => fake()->boolean()
+            'nome' => fake()->name(),
+            'cpf' => fake()->unique()->numerify('###.###.###-##'),
+            'email' => fake()->unique()->safeEmail(),
+            'telefone' => fake('pt_BR')->numerify('(##) #####-####'),
+            'endereco' => fake()->address(),
+            'reserva' => fake()->boolean(),
         ];
     }
 }

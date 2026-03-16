@@ -38,4 +38,43 @@ class ProdutosController extends Controller
             ->route('produtos.index')
             ->with('success', 'Produto cadastrado com sucesso!');
     }
+
+    public function edit($id)
+    {
+        $produto = Produtos::findOrFail($id);
+        return view('produtos.edit', compact('produto'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $produto = Produtos::findOrFail($id);
+
+        $request->validate([
+            'nome' => 'required|string|min:2|max:255',
+            'descricao' => 'nullable|string|max:500',
+            'preco' => 'required|numeric|min:0|max:999999.99',
+            'categoria' => 'required|string|max:255',
+        ], [
+            'nome.required' => 'O nome do produto é obrigatório.',
+            'preco.required' => 'O preço é obrigatório.',
+            'preco.numeric' => 'O preço deve ser numérico.',
+            'categoria.required' => 'A categoria é obrigatória.',
+        ]);
+
+        $produto->update($request->all());
+
+        return redirect()
+            ->route('produtos.index')
+            ->with('success', 'Produto atualizado com sucesso!');
+    }
+
+    public function destroy($id)
+    {
+        $produto = Produtos::findOrFail($id);
+        $produto->delete();
+
+        return redirect()
+            ->route('produtos.index')
+            ->with('success', 'Produto excluído com sucesso!');
+    }
 }

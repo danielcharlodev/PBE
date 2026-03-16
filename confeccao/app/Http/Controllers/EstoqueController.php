@@ -70,4 +70,60 @@ class EstoqueController extends Controller
             ->route('estoque.index')
             ->with('success', 'Item cadastrado no estoque com sucesso!');
     }
+
+
+    public function edit($id)
+    {
+        $estoque = Estoque::findOrFail($id);
+        return view('estoque.edit', compact('estoque'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $estoque = Estoque::findOrFail($id);
+
+        $request->validate([
+            'nome' => 'required|string|min:2|max:255',
+            'quantidade' => 'required|integer|min:0|max:999999',
+            'reservado' => 'required|integer|min:0|max:999999',
+            'preco' => 'nullable|numeric|min:0|max:999999.99',
+            'data_entrada' => 'nullable|date|before_or_equal:today',
+        ]);
+
+        if ((int) $request->reservado > (int) $request->quantidade) {
+            return back()
+                ->withErrors(['reservado' => 'O valor reservado não pode ser maior que a quantidade total.'])
+                ->withInput();
+        }
+
+        if ($request->filled('data_entrada') && Carbon::parse($request->data_entrada)->isFuture()) {
+            return back()
+                ->withErrors(['data_entrada' => 'A data de entrada não pode ser futura.'])
+                ->withInput();
+        }
+
+        $estoque->update([
+            'nome' => $request->nome,
+            'quantidade' => $request->quantidade,
+            'reservado' => $request->reservado,
+            'preco' => $request->preco,
+            'data_entrada' => $request->data_entrada,
+        ]);
+
+        return redirect()
+            ->route('estoque.index')
+            ->with('success', 'Item do estoque atualizado com sucesso!');
+    }
+
+
+    public function destroy($id)
+    {
+        $estoque = Estoque::findOrFail($id);
+        $estoque->delete();
+
+        return redirect()
+            ->route('estoque.index')
+            ->with('success', 'Item removido do estoque!');
+    }
 }

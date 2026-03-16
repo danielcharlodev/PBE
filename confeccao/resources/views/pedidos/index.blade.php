@@ -190,6 +190,53 @@
                                         {{ ucfirst($pedido->status) }}
                                     </span>
                                 </div>
+
+                                <div style="margin-top:22px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                                    <a href="{{ route('pedidos.edit', $pedido->id) }}"
+                                       style="
+                                            display:inline-block;
+                                            background:linear-gradient(135deg,#f59e0b,#d97706);
+                                            color:white;
+                                            padding:12px 26px;
+                                            border-radius:999px;
+                                            font-weight:700;
+                                            font-size:13px;
+                                            letter-spacing:1px;
+                                            text-transform:uppercase;
+                                            text-decoration:none;
+                                            box-shadow:0 8px 18px rgba(0,0,0,0.15);
+                                            transition:all 0.25s ease;
+                                       "
+                                       onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 28px rgba(0,0,0,0.25)'"
+                                       onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 18px rgba(0,0,0,0.15)'"
+                                    >
+                                        Editar
+                                    </a>
+
+                                    <button
+                                        type="button"
+                                        onclick="abrirModalExcluir('{{ $pedido->id }}', 'Pedido #{{ $pedido->id }} - {{ addslashes($pedido->cliente->nome ?? 'Sem cliente') }}')"
+                                        style="
+                                            display:inline-block;
+                                            background:linear-gradient(135deg,#ef4444,#dc2626);
+                                            color:white;
+                                            padding:12px 26px;
+                                            border-radius:999px;
+                                            font-weight:700;
+                                            font-size:13px;
+                                            letter-spacing:1px;
+                                            text-transform:uppercase;
+                                            border:none;
+                                            cursor:pointer;
+                                            box-shadow:0 8px 18px rgba(0,0,0,0.15);
+                                            transition:all 0.25s ease;
+                                        "
+                                        onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 28px rgba(0,0,0,0.25)'"
+                                        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 18px rgba(0,0,0,0.15)'"
+                                    >
+                                        Excluir
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     @endforeach
@@ -238,4 +285,119 @@
 
         </div>
     </div>
+
+    <div id="modalExcluir" style="
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,0.45);
+        display:none;
+        align-items:center;
+        justify-content:center;
+        z-index:9999;
+        padding:20px;
+    ">
+        <div style="
+            background:white;
+            width:100%;
+            max-width:460px;
+            border-radius:24px;
+            padding:34px 30px;
+            box-shadow:0 25px 50px rgba(0,0,0,0.25);
+            text-align:center;
+            border:1px solid #e5e7eb;
+        ">
+            <div style="
+                width:72px;
+                height:72px;
+                margin:0 auto 18px auto;
+                border-radius:999px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:#fee2e2;
+                color:#dc2626;
+                font-size:32px;
+                font-weight:800;
+            ">
+                !
+            </div>
+
+            <h3 style="font-size:28px; font-weight:900; color:#111827; margin-bottom:10px;">
+                Excluir pedido
+            </h3>
+
+            <p style="font-size:16px; color:#6b7280; margin-bottom:8px;">
+                Você está prestes a excluir este pedido:
+            </p>
+
+            <p id="nomePedidoExcluir" style="font-size:20px; font-weight:800; color:#1f2937; margin-bottom:28px;">
+                Pedido
+            </p>
+
+            <form id="formExcluirPedido" method="POST">
+                @csrf
+                @method('DELETE')
+
+                <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                    <button
+                        type="button"
+                        onclick="fecharModalExcluir()"
+                        style="
+                            background:#e5e7eb;
+                            color:#374151;
+                            padding:14px 28px;
+                            border:none;
+                            border-radius:999px;
+                            font-size:15px;
+                            font-weight:700;
+                            cursor:pointer;
+                            transition:all 0.25s ease;
+                        "
+                        onmouseover="this.style.transform='translateY(-3px)'"
+                        onmouseout="this.style.transform='translateY(0)'"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        style="
+                            background:linear-gradient(135deg,#ef4444,#dc2626);
+                            color:white;
+                            padding:14px 28px;
+                            border:none;
+                            border-radius:999px;
+                            font-size:15px;
+                            font-weight:700;
+                            cursor:pointer;
+                            box-shadow:0 10px 20px rgba(0,0,0,0.12);
+                            transition:all 0.25s ease;
+                        "
+                        onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 15px 30px rgba(0,0,0,0.18)'"
+                        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 10px 20px rgba(0,0,0,0.12)'"
+                    >
+                        Sim, excluir
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function abrirModalExcluir(id, nome) {
+            document.getElementById('nomePedidoExcluir').innerText = nome;
+            document.getElementById('formExcluirPedido').action = "{{ url('/pedidos') }}/" + id;
+            document.getElementById('modalExcluir').style.display = 'flex';
+        }
+
+        function fecharModalExcluir() {
+            document.getElementById('modalExcluir').style.display = 'none';
+        }
+
+        document.getElementById('modalExcluir').addEventListener('click', function(e) {
+            if (e.target === this) {
+                fecharModalExcluir();
+            }
+        });
+    </script>
 </x-app-layout>

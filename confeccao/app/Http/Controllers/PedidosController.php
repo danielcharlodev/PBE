@@ -76,4 +76,105 @@ class PedidosController extends Controller
             ->route('pedidos.index')
             ->with('success', 'Pedido cadastrado com sucesso!');
     }
+
+    public function edit($id)
+    {
+        $pedido = Pedidos::with('itens')->findOrFail($id);
+        $clientes = Clientes::orderBy('nome')->get();
+        $produtos = Estoque::orderBy('nome')->get();
+
+        return view('pedidos.edit', compact('pedido', 'clientes', 'produtos'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $pedido = Pedidos::with('itens')->findOrFail($id);
+
+        $data = $request->validate([
+            'cliente_id' => ['required', 'exists:clientes,id'],
+            'estoque_id' => ['required', 'exists:estoque,id'],
+            'quantidade' => ['required', 'integer', 'min:1'],
+        ], [
+            'cliente_id.required' => 'Selecione um cliente.',
+            'cliente_id.exists' => 'Cliente inválido.',
+            'estoque_id.required' => 'Selecione um item do estoque.',
+            'estoque_id.exists' => 'Item do estoque inválido.',
+            'quantidade.required' => 'Informe a quantidade.',
+            'quantidade.integer' => 'A quantidade deve ser um número inteiro.',
+            'quantidade.min' => 'A quantidade mínima é 1.',
+        ]);
+
+        DB::transaction(function () use ($pedido, $data) {
+            $itemAntigo = $pedido->itens->first();
+
+            if ($itemAntigo) {
+                $estoqueAntigo = Estoque::lockForUpdate()->findOrFail($itemAntigo->estoque_id);
+                $estoqueAntigo->reservado = max(0, $estoqueAntigo->reservado - $itemAntigo->quantidade_reservada);
+                $estoqueAntigo->save();
+            }
+
+            $produtoNovo = Estoque::lockForUpdate()->findOrFail($data['estoque_id']);
+
+            $disponivel = $produtoNovo->quantidade - $produtoNovo->reservado;
+            $qtd = (int) $data['quantidade'];
+
+            $reservar = max(0, min($disponivel, $qtd));
+            $falta = max(0, $qtd - $reservar);
+
+            $pedido->update([
+                'cliente_id' => $data['cliente_id'],
+                'status' => $falta > 0 ? 'pendente' : 'reservado',
+            ]);
+
+            if ($itemAntigo) {
+                $itemAntigo->update([
+                    'estoque_id' => $produtoNovo->id,
+                    'quantidade' => $qtd,
+                    'quantidade_reservada' => $reservar,
+                    'quantidade_em_falta' => $falta,
+                    'preco_unitario' => $produtoNovo->preco,
+                ]);
+            } else {
+                PedidoItem::create([
+                    'pedido_id' => $pedido->id,
+                    'estoque_id' => $produtoNovo->id,
+                    'quantidade' => $qtd,
+                    'quantidade_reservada' => $reservar,
+                    'quantidade_em_falta' => $falta,
+                    'preco_unitario' => $produtoNovo->preco,
+                ]);
+            }
+
+            $produtoNovo->reservado = $produtoNovo->reservado + $reservar;
+            $produtoNovo->save();
+        });
+
+        return redirect()
+            ->route('pedidos.index')
+            ->with('success', 'Pedido atualizado com sucesso!');
+    }
+
+    public function destroy($id)
+    {
+        $pedido = Pedidos::with('itens')->findOrFail($id);
+
+        DB::transaction(function () use ($pedido) {
+            foreach ($pedido->itens as $item) {
+                $produto = Estoque::lockForUpdate()->find($item->estoque_id);
+
+                if ($produto) {
+                    $produto->reservado = max(0, $produto->reservado - $item->quantidade_reservada);
+                    $produto->save();
+                }
+
+                $item->delete();
+            }
+
+            $pedido->delete();
+        });
+
+        return redirect()
+            ->route('pedidos.index')
+            ->with('success', 'Pedido excluído com sucesso!');
+    }
 }
