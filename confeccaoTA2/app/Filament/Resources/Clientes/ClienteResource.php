@@ -32,6 +32,11 @@ class ClienteResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'Cliente';
 
+            public static function canAccess(): bool
+{
+    return auth()->user()?->can('ver_clientes') ?? false;
+}
+
     public static function form(Schema $schema): Schema
     {
         return ClienteForm::configure($schema)

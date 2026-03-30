@@ -23,6 +23,11 @@ class FornecedorResource extends Resource
 {
     protected static ?string $model = Fornecedor::class;
 
+        public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('Admin') ?? true;
+    }
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'Fornecedor';
