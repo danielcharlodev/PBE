@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Produto extends Model
 {
+    // 🔓 Libera preenchimento em massa (todas as colunas)
     protected $guarded = [];
-    
-        public function movimentacoes()
+
+    // 🔗 RELACIONAMENTO: Produto → Movimentações de estoque
+    public function movimentacoes()
     {
         return $this->hasMany(MovimentacaoEstoque::class);
     }

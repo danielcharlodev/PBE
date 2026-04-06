@@ -2,88 +2,130 @@
 
 namespace App\Filament\Resources\Permissions;
 
+// 📄 Páginas do CRUD (listar, criar, editar, visualizar)
 use App\Filament\Resources\Permissions\Pages\CreatePermission;
 use App\Filament\Resources\Permissions\Pages\EditPermission;
 use App\Filament\Resources\Permissions\Pages\ListPermissions;
 use App\Filament\Resources\Permissions\Pages\ViewPermission;
+
+// 🧩 Configurações separadas de formulário e visualização
 use App\Filament\Resources\Permissions\Schemas\PermissionForm;
 use App\Filament\Resources\Permissions\Schemas\PermissionInfolist;
+
+// 📊 Configuração da tabela
 use App\Filament\Resources\Permissions\Tables\PermissionsTable;
-// use App\Models\Permission;
+
+// 🧱 Model ligado ao banco (Spatie)
 use Spatie\Permission\Models\Permission;
+
+// ⚙️ Tipagem
 use BackedEnum;
+use UnitEnum;
+
+// 🧩 Base do Filament
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+
+// 🎨 Ícones
+use Filament\Support\Icons\Heroicon;
+
+// 🧾 Inputs do formulário
 use Filament\Forms\Components\TextInput;
+
+// 📊 Colunas da tabela
 use Filament\Tables\Columns\TextColumn;
+
+// 🗑️ Ação de deletar em massa
 use Filament\Actions\DeleteBulkAction;
 
 class PermissionResource extends Resource
 {
+    // 🔗 Model que esse CRUD usa
     protected static ?string $model = Permission::class;
 
+    // 📂 Grupo no menu lateral
+    protected static string|UnitEnum|null $navigationGroup = 'Administração';
+
+    // 🔢 Ordem no menu
+    protected static ?int $navigationSort = 1;
+
+    // 🎨 Ícone do menu
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Permissões';
+    // 🏷️ Nome que aparece no menu
+    protected static ?string $navigationLabel = 'Painel de Permissões';
 
-//         public static function canAccess(): bool
-// {
-//     return auth()->user()?->can('acesso_geral') ?? false;
-// }
+    // 🧾 Nome singular
+    protected static ?string $modelLabel = 'Permissão';
 
+    // 🧾 Nome plural
+    protected static ?string $pluralModelLabel = 'Permissões';
+
+    // 📌 Campo usado como título (vem do banco)
+    protected static ?string $recordTitleAttribute = 'name';
+
+    // 🧩 FORMULÁRIO (criar/editar)
     public static function form(Schema $schema): Schema
     {
         return PermissionForm::configure($schema)
-        ->schema([
-            TextInput::make('name')
-            ->label('Nome da Regra')
-            ->required(),
+            ->schema([
+                // 🏷️ Nome da permissão
+                TextInput::make('name')
+                    ->label('Nome da Regra')
+                    ->required(),
 
-            TextInput::make('guard_name')
-            ->label('Sigla da Regra'),
-        ]);
+                // 🔐 Guard (geralmente web/api)
+                TextInput::make('web')
+                    ->label('Sigla da Regra'),
+            ]);
     }
 
+    // 👁️ TELA DE VISUALIZAÇÃO (view)
     public static function infolist(Schema $schema): Schema
     {
         return PermissionInfolist::configure($schema);
     }
 
+    // 📊 TABELA (listagem dos dados)
     public static function table(Table $table): Table
     {
         return PermissionsTable::configure($table)
-        ->columns([
-            TextColumn::make('name')
-            ->label('Nome da Regra')
-            ->searchable()
-            ->sortable(),
+            ->columns([
+                // 🏷️ Nome
+                TextColumn::make('name')
+                    ->label('Nome da Regra')
+                    ->searchable()
+                    ->sortable(),
 
-            TextColumn::make('guard_name')
-            ->label('Sigla da Regra')
-            ->searchable()
-            ->sortable(),
-        ])
-        ->toolbarActions([
+                // 🔐 Guard
+                TextColumn::make('guard_name')
+                    ->label('Sigla da Regra')
+                    ->searchable()
+                    ->sortable(),
+            ])
+            ->toolbarActions([
+                // 🗑️ Deletar em massa
                 DeleteBulkAction::make(),
-        ]);;
+            ]);
     }
 
+    // 🔗 Relacionamentos
     public static function getRelations(): array
     {
         return [
-            //
+            // vazio
         ];
     }
 
+    // 📄 ROTAS das páginas
     public static function getPages(): array
     {
         return [
-            'index' => ListPermissions::route('/'),
-            'create' => CreatePermission::route('/create'),
-            'view' => ViewPermission::route('/{record}'),
-            'edit' => EditPermission::route('/{record}/edit'),
+            'index' => ListPermissions::route('/'), // lista
+            'create' => CreatePermission::route('/create'), // criar
+            'view' => ViewPermission::route('/{record}'), // visualizar
+            'edit' => EditPermission::route('/{record}/edit'), // editar
         ];
     }
 }
