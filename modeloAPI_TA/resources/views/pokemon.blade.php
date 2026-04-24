@@ -26,6 +26,23 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .card-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
         }
 
         .card-wrapper {
@@ -33,8 +50,8 @@
         }
 
         .pokemon-card {
-            width: 320px;
-            height: 450px;
+            width: 400px;
+            height: 580px;
             border-radius: 18px;
             position: relative;
             transform-style: preserve-3d;
@@ -216,7 +233,7 @@
         .pokemon-image-container {
             background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
             border-radius: 8px;
-            height: 140px;
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -227,8 +244,8 @@
         }
 
         .pokemon-image {
-            width: 120px;
-            height: 120px;
+            width: 160px;
+            height: 160px;
             object-fit: contain;
             filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
             transition: transform 0.3s;
@@ -377,10 +394,13 @@
         .buttons {
             display: flex;
             gap: 12px;
+            width: 400px;
+            justify-content: space-between;
         }
 
         .btn {
-            padding: 12px 24px;
+            flex: 1;
+            padding: 14px 20px;
             border: none;
             border-radius: 12px;
             font-size: 14px;
@@ -460,36 +480,232 @@
             font-size: 8px;
             color: #999;
         }
+
+        /* Campo de Pesquisa */
+        .search-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+            justify-content: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-search {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-search:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Lista de Favoritos */
+        .favorites-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 550px;
+            height: fit-content;
+        }
+
+        .favorites-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        .favorites-list {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* Scrollbar personalizado */
+        .favorites-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .favorites-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .favorites-list::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .favorites-list::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Firefox */
+        .favorites-list {
+            scrollbar-color: #3b82f6 rgba(255, 255, 255, 0.05);
+            scrollbar-width: thin;
+        }
+
+        .favorite-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .favorite-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .favorite-item img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .favorite-item-name {
+            font-size: 9px;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            text-transform: capitalize;
+            line-height: 1.2;
+        }
+
+        .favorite-item-id {
+            font-size: 7px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .remove-favorite {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 22px;
+            height: 22px;
+            background: rgba(255, 0, 0, 0.8);
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+            line-height: 1;
+        }
+
+        .favorite-item:hover .remove-favorite {
+            opacity: 1;
+        }
+
+        .favorites-empty {
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            padding: 30px 15px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="card-wrapper">
-            <div class="pokemon-card" id="pokemonCard">
-                <div class="card-inner type-fire" id="cardInner">
-                    <div class="holo-effect"></div>
-                    <div class="rainbow-overlay"></div>
-                    <div class="card-content" id="cardContent">
-                        <div class="loading" id="loading">
-                            <div class="spinner"></div>
-                            <p style="margin-top: 12px;">Carregando Pokémon...</p>
+        <div class="search-container">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="searchInput" 
+                placeholder="Nome ou número da Pokédex"
+            />
+            <button class="btn btn-search" id="searchBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                Pesquisar
+            </button>
+        </div>
+
+        <div class="main-content">
+            <div class="favorites-container">
+                <div class="favorites-title">❤️ Seus Favoritos</div>
+                <div class="favorites-list" id="favoritesList">
+                    <div class="favorites-empty">Adicione Pokémons aos favoritos!</div>
+                </div>
+            </div>
+
+            <div class="card-section">
+                <div class="card-wrapper">
+                    <div class="pokemon-card" id="pokemonCard">
+                        <div class="card-inner type-fire" id="cardInner">
+                            <div class="holo-effect"></div>
+                            <div class="rainbow-overlay"></div>
+                            <div class="card-content" id="cardContent">
+                                <div class="loading" id="loading">
+                                    <div class="spinner"></div>
+                                    <p style="margin-top: 12px;">Carregando Pokémon...</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="buttons">
-            <button class="btn btn-primary" id="newPokemonBtn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
-                </svg>
-                Novo Pokémon
-            </button>
-            <button class="btn btn-favorite" id="favoriteBtn">
-                <span class="heart">&#9825;</span>
-                Favoritar
-            </button>
+                <div class="buttons">
+                    <button class="btn btn-primary" id="newPokemonBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+                        </svg>
+                        Novo Pokémon
+                    </button>
+                    <button class="btn btn-favorite" id="favoriteBtn">
+                        <span class="heart">&#9825;</span>
+                        Favoritar
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -559,23 +775,43 @@
         });
 
         // Buscar Pokémon
-        async function fetchPokemon() {
-            const loading = document.getElementById('loading');
+        async function fetchPokemon(searchQuery = null) {
             const cardContent = document.getElementById('cardContent');
             
-            loading.style.display = 'flex';
+            if (!cardContent) {
+                console.error('cardContent não encontrado');
+                return;
+            }
+            
+            // Mostrar loading
+            cardContent.innerHTML = '<div class="loading"><div class="spinner"></div><p style="margin-top: 12px;">Carregando Pokémon...</p></div>';
             
             try {
-                const randomId = Math.floor(Math.random() * 898) + 1;
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
-                const data = await response.json();
+                let pokemon;
                 
-                currentPokemon = data;
-                renderCard(data);
+                if (searchQuery) {
+                    // Buscar por nome ou ID
+                    const query = searchQuery.toLowerCase().trim();
+                    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`Pokémon "${searchQuery}" não encontrado`);
+                    }
+                    
+                    pokemon = await response.json();
+                } else {
+                    // Buscar aleatório
+                    const randomId = Math.floor(Math.random() * 898) + 1;
+                    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+                    pokemon = await response.json();
+                }
+                
+                currentPokemon = pokemon;
+                renderCard(pokemon);
                 updateFavoriteButton();
             } catch (error) {
                 console.error('Erro ao buscar Pokémon:', error);
-                cardContent.innerHTML = '<div class="loading"><p>Erro ao carregar. Tente novamente.</p></div>';
+                cardContent.innerHTML = `<div class="loading"><p style="color: #ff6b6b;">❌ ${error.message}</p></div>`;
             }
         }
 
@@ -591,6 +827,24 @@
             const attack = pokemon.stats.find(s => s.stat.name === 'attack').base_stat;
             const defense = pokemon.stats.find(s => s.stat.name === 'defense').base_stat;
             const weakness = typeWeaknesses[type] || 'fighting';
+            
+            // Preparar habilidades
+            const abilities = pokemon.abilities.map(a => ({
+                name: a.ability.name,
+                isHidden: a.is_hidden
+            })).slice(0, 3); // Mostrar até 3 habilidades
+            
+            const abilitiesHTML = abilities.map((ability, index) => `
+                <div class="attack">
+                    <div class="attack-cost">
+                        ${ability.isHidden ? '<div style="font-size: 10px; color: #fbbf24; font-weight: 700;">H</div>' : '<div class="energy energy-' + type + '"></div>'}
+                    </div>
+                    <div class="attack-info">
+                        <div class="attack-name">${ability.name.replace('-', ' ').toUpperCase()}</div>
+                        <div class="attack-description">${ability.isHidden ? 'Habilidade Oculta' : 'Habilidade'}</div>
+                    </div>
+                </div>
+            `).join('');
             
             const attackDamage1 = Math.floor(attack * 0.5) + 10;
             const attackDamage2 = Math.floor(attack * 1.2) + 30;
@@ -626,33 +880,11 @@
                 </div>
                 
                 <div class="attacks">
-                    <div class="attack">
-                        <div class="attack-cost">
-                            <div class="energy energy-${type}"></div>
-                        </div>
-                        <div class="attack-info">
-                            <div class="attack-name">Investida Rápida</div>
-                            <div class="attack-description">Jogue uma moeda. Se der coroa, este ataque causa 10 de dano a mais.</div>
-                        </div>
-                        <div class="attack-damage">${attackDamage1}</div>
-                    </div>
-                    
-                    <div class="attack">
-                        <div class="attack-cost">
-                            <div class="energy energy-${type}"></div>
-                            <div class="energy energy-${type}"></div>
-                            <div class="energy energy-colorless"></div>
-                        </div>
-                        <div class="attack-info">
-                            <div class="attack-name">Impacto Devastador</div>
-                            <div class="attack-description">Este Pokémon também causa ${Math.floor(attackDamage2 * 0.2)} de dano a si mesmo.</div>
-                        </div>
-                        <div class="attack-damage">${attackDamage2}</div>
-                    </div>
+                    ${abilitiesHTML}
                 </div>
                 
                 <div class="ex-rule">
-                    <strong>Regra de Pokémon ex:</strong> Quando seu Pokémon ex for Nocauteado, seu oponente pega 2 cartas de Prêmio.
+                    <strong>Habilidades:</strong> Características especiais deste Pokémon.
                 </div>
                 
                 <div class="card-footer">
@@ -684,38 +916,187 @@
         }
 
         function toggleFavorite() {
-            if (!currentPokemon) return;
+            if (!currentPokemon) {
+                console.warn('Nenhum Pokémon carregado');
+                return;
+            }
+            
+            console.log('Toggle favorite para:', currentPokemon.name, 'ID:', currentPokemon.id);
             
             const index = favorites.indexOf(currentPokemon.id);
             if (index === -1) {
                 favorites.push(currentPokemon.id);
+                console.log('Adicionado aos favoritos');
             } else {
                 favorites.splice(index, 1);
+                console.log('Removido dos favoritos');
             }
             
             localStorage.setItem('pokemonFavorites', JSON.stringify(favorites));
+            console.log('Favoritos salvos:', favorites);
             updateFavoriteButton();
+            renderFavoritesList();
         }
 
         function updateFavoriteButton() {
             const btn = document.getElementById('favoriteBtn');
+            
+            if (!btn) {
+                console.error('Botão favoriteBtn não encontrado');
+                return;
+            }
+            
             const heart = btn.querySelector('.heart');
+            
+            if (!heart) {
+                console.error('Elemento .heart não encontrado');
+                return;
+            }
+            
+            console.log('Atualizando botão. currentPokemon:', currentPokemon?.id, 'favorites:', favorites);
             
             if (currentPokemon && favorites.includes(currentPokemon.id)) {
                 btn.classList.add('active');
                 heart.innerHTML = '&#9829;';
+                console.log('Botão marcado como ativo (favorito)');
             } else {
                 btn.classList.remove('active');
                 heart.innerHTML = '&#9825;';
+                console.log('Botão marcado como inativo (não favorito)');
             }
         }
 
-        // Event Listeners
-        document.getElementById('newPokemonBtn').addEventListener('click', fetchPokemon);
-        document.getElementById('favoriteBtn').addEventListener('click', toggleFavorite);
+        // Event Listeners - Esperar pelo DOMContentLoaded para garantir que os elementos existem
+        function initializeEventListeners() {
+            const newPokemonBtn = document.getElementById('newPokemonBtn');
+            const favoriteBtn = document.getElementById('favoriteBtn');
+            const searchBtn = document.getElementById('searchBtn');
+            const searchInput = document.getElementById('searchInput');
+            
+            if (newPokemonBtn) {
+                newPokemonBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Clicou em Novo Pokémon');
+                    fetchPokemon();
+                });
+            } else {
+                console.error('Botão newPokemonBtn não encontrado');
+            }
+            
+            if (favoriteBtn) {
+                favoriteBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Clicou em Favoritar');
+                    toggleFavorite();
+                });
+            } else {
+                console.error('Botão favoriteBtn não encontrado');
+            }
 
-        // Carregar Pokémon inicial
+            if (searchBtn) {
+                searchBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const query = searchInput.value;
+                    if (query.trim()) {
+                        console.log('Pesquisando por:', query);
+                        fetchPokemon(query);
+                    }
+                });
+            } else {
+                console.error('Botão searchBtn não encontrado');
+            }
+
+            if (searchInput) {
+                // Buscar ao pressionar Enter
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = searchInput.value;
+                        if (query.trim()) {
+                            console.log('Pesquisando por:', query);
+                            fetchPokemon(query);
+                        }
+                    }
+                });
+            } else {
+                console.error('Input searchInput não encontrado');
+            }
+        }
+
+        // Renderizar lista de favoritos
+        async function renderFavoritesList() {
+            const favoritesList = document.getElementById('favoritesList');
+            
+            if (!favoritesList) return;
+            
+            if (favorites.length === 0) {
+                favoritesList.innerHTML = '<div class="favorites-empty">Adicione Pokémons aos favoritos!</div>';
+                return;
+            }
+            
+            favoritesList.innerHTML = '';
+            
+            for (const pokemonId of favorites) {
+                try {
+                    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+                    const pokemon = await response.json();
+                    
+                    const favoriteItem = document.createElement('div');
+                    favoriteItem.className = 'favorite-item';
+                    favoriteItem.innerHTML = `
+                        <img 
+                            src="${pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default}" 
+                            alt="${pokemon.name}"
+                        />
+                        <div class="favorite-item-name">${pokemon.name}</div>
+                        <div class="favorite-item-id">#${String(pokemon.id).padStart(4, '0')}</div>
+                        <div class="remove-favorite">×</div>
+                    `;
+                    
+                    // Click para carregar o Pokémon
+                    favoriteItem.addEventListener('click', function(e) {
+                        if (!e.target.classList.contains('remove-favorite')) {
+                            currentPokemon = pokemon;
+                            renderCard(pokemon);
+                            updateFavoriteButton();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    });
+                    
+                    // Click no X para remover
+                    const removeBtn = favoriteItem.querySelector('.remove-favorite');
+                    removeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        removeFavorite(pokemonId);
+                    });
+                    
+                    favoritesList.appendChild(favoriteItem);
+                } catch (error) {
+                    console.error('Erro ao carregar favorito:', error);
+                }
+            }
+        }
+
+        function removeFavorite(pokemonId) {
+            const index = favorites.indexOf(pokemonId);
+            if (index !== -1) {
+                favorites.splice(index, 1);
+                localStorage.setItem('pokemonFavorites', JSON.stringify(favorites));
+                renderFavoritesList();
+                updateFavoriteButton();
+            }
+        }
+
+        // Inicializar quando o DOM estiver pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeEventListeners);
+        } else {
+            initializeEventListeners();
+        }
+
+        // Carregar Pokémon inicial e lista de favoritos
         fetchPokemon();
+        renderFavoritesList();
     </script>
 </body>
 </html>
