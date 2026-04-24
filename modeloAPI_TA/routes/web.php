@@ -3,6 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PokemonController;
+
+Route::get('/pokedex', [PokemonController::class, 'index']);
+
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Exemplo de get
 Route::get('/pokemon/{nome}', function ($nome) {
