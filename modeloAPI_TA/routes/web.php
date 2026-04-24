@@ -8,7 +8,7 @@ use App\Http\Controllers\PokemonController;
 Route::get('/pokedex', [PokemonController::class, 'index']);
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pokemon');
 });
 
 // Exemplo de get
