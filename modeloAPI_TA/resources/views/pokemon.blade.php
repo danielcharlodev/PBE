@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Card Pokémon</title>
     <style>
         * {
@@ -244,9 +245,10 @@
         }
 
         .pokemon-image {
-            width: 160px;
-            height: 160px;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
             filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
             transition: transform 0.3s;
         }
@@ -264,6 +266,57 @@
             background: rgba(0, 0, 0, 0.05);
             border-radius: 4px;
             margin-bottom: 8px;
+        }
+
+        .card-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .card-tab-btn {
+            border: 1px solid #d1d5db;
+            background: #f3f4f6;
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .card-tab-btn.active {
+            background: #1f2937;
+            color: #fff;
+            border-color: #1f2937;
+        }
+
+        .tab-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .info-tab-panel {
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 8px;
+            padding: 8px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .info-block-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .info-block-text {
+            font-size: 11px;
+            line-height: 1.4;
+            color: #374151;
         }
 
         /* Ataques */
@@ -649,6 +702,137 @@
             padding: 30px 15px;
             font-style: italic;
         }
+
+        .btn-success {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: white;
+            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.5);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 999;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 520px;
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            padding: 18px;
+            color: #f3f4f6;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .modal-form {
+            display: grid;
+            gap: 12px;
+        }
+
+        .modal-tab-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .modal-tab-btn {
+            border: 1px solid #374151;
+            background: #1f2937;
+            color: #d1d5db;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .modal-tab-btn.active {
+            background: #2563eb;
+            color: #fff;
+            border-color: #2563eb;
+        }
+
+        .modal-tab-content {
+            display: grid;
+            gap: 10px;
+        }
+
+        .attack-builder-row {
+            display: grid;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .attack-builder-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #bfdbfe;
+        }
+
+        .modal-form label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #d1d5db;
+        }
+
+        .modal-form input,
+        .modal-form textarea {
+            width: 100%;
+            margin-top: 6px;
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #f9fafb;
+        }
+
+        .modal-form textarea {
+            min-height: 92px;
+            resize: vertical;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 6px;
+        }
+
+        .modal-feedback {
+            font-size: 12px;
+            min-height: 18px;
+        }
+
+        .modal-feedback.error {
+            color: #fca5a5;
+        }
+
+        .modal-feedback.success {
+            color: #86efac;
+        }
     </style>
 </head>
 <body>
@@ -700,12 +884,59 @@
                         </svg>
                         Novo Pokémon
                     </button>
+                    <button class="btn btn-success" id="openCreateModalBtn">
+                        Cadastrar Novo Pokémon
+                    </button>
                     <button class="btn btn-favorite" id="favoriteBtn">
                         <span class="heart">&#9825;</span>
                         Favoritar
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="createPokemonModal">
+        <div class="modal-card">
+            <div class="modal-title">Cadastrar Novo Pokémon</div>
+            <form class="modal-form" id="createPokemonForm">
+                <div class="modal-tab-buttons">
+                    <button type="button" class="modal-tab-btn active" data-modal-tab="basic">Dados básicos</button>
+                    <button type="button" class="modal-tab-btn" data-modal-tab="attacks">Ataques</button>
+                </div>
+
+                <div class="modal-tab-content" id="modal-tab-basic">
+                    <label>Nome
+                        <input type="text" name="name" required maxlength="100" />
+                    </label>
+                    <label>Tipo
+                        <input type="text" name="type" required maxlength="50" />
+                    </label>
+                    <label>Poder
+                        <input type="number" name="power" required min="1" />
+                    </label>
+                    <label>Descrição
+                        <textarea name="description" required></textarea>
+                    </label>
+                    <label>Imagem local
+                        <input type="file" name="photo" accept="image/*" />
+                    </label>
+                </div>
+
+                <div class="modal-tab-content hidden" id="modal-tab-attacks">
+                    <label>Quantidade de ataques
+                        <input type="number" id="attackCountInput" min="1" max="6" value="1" />
+                    </label>
+                    <div id="attacksBuilder"></div>
+                    <input type="hidden" name="attacks_json" id="attacksJsonInput" />
+                </div>
+
+                <div class="modal-feedback" id="createPokemonFeedback"></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-favorite" id="closeCreateModalBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-success" id="submitCreatePokemonBtn">Adicionar</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -790,15 +1021,16 @@
                 let pokemon;
                 
                 if (searchQuery) {
-                    // Buscar por nome ou ID
-                    const query = searchQuery.toLowerCase().trim();
-                    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`);
-                    
+                    const query = searchQuery.trim();
+                    const response = await fetch(`/pokemons/search?q=${encodeURIComponent(query)}`);
+
                     if (!response.ok) {
-                        throw new Error(`Pokémon "${searchQuery}" não encontrado`);
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.message || `Pokémon "${searchQuery}" não encontrado`);
                     }
-                    
-                    pokemon = await response.json();
+
+                    const data = await response.json();
+                    pokemon = data.pokemon;
                 } else {
                     // Buscar aleatório
                     const randomId = Math.floor(Math.random() * 898) + 1;
@@ -825,29 +1057,50 @@
             
             const hp = pokemon.stats.find(s => s.stat.name === 'hp').base_stat;
             const attack = pokemon.stats.find(s => s.stat.name === 'attack').base_stat;
-            const defense = pokemon.stats.find(s => s.stat.name === 'defense').base_stat;
             const weakness = typeWeaknesses[type] || 'fighting';
-            
-            // Preparar habilidades
-            const abilities = pokemon.abilities.map(a => ({
-                name: a.ability.name,
-                isHidden: a.is_hidden
-            })).slice(0, 3); // Mostrar até 3 habilidades
-            
-            const abilitiesHTML = abilities.map((ability, index) => `
-                <div class="attack">
-                    <div class="attack-cost">
-                        ${ability.isHidden ? '<div style="font-size: 10px; color: #fbbf24; font-weight: 700;">H</div>' : '<div class="energy energy-' + type + '"></div>'}
+
+            const customAttacks = Array.isArray(pokemon.custom_attacks) ? pokemon.custom_attacks : [];
+            const isLocalPokemon = Boolean(pokemon.isLocal || pokemon.descricao || pokemon.custom_attacks);
+            const imageUrl =
+                pokemon?.sprites?.other?.['official-artwork']?.front_default
+                || pokemon?.sprites?.front_default
+                || 'https://via.placeholder.com/160?text=?';
+
+            const attacksHTML = customAttacks.length > 0
+                ? customAttacks.map((move) => `
+                    <div class="attack">
+                        <div class="attack-cost">
+                            <div class="energy energy-${type}"></div>
+                        </div>
+                        <div class="attack-info">
+                            <div class="attack-name">${(move.name || 'Ataque').toUpperCase()}</div>
+                            <div class="attack-description">${move.description || 'Ataque cadastrado manualmente.'}</div>
+                        </div>
+                        <div class="attack-damage">${move.damage || ''}</div>
                     </div>
-                    <div class="attack-info">
-                        <div class="attack-name">${ability.name.replace('-', ' ').toUpperCase()}</div>
-                        <div class="attack-description">${ability.isHidden ? 'Habilidade Oculta' : 'Habilidade'}</div>
+                `).join('')
+                : isLocalPokemon
+                    ? `
+                        <div class="attack">
+                            <div class="attack-info">
+                                <div class="attack-name">SEM ATAQUES CADASTRADOS</div>
+                                <div class="attack-description">Cadastre ataques no modal para aparecerem aqui.</div>
+                            </div>
+                        </div>
+                    `
+                    : pokemon.abilities.map((ability) => `
+                    <div class="attack">
+                        <div class="attack-cost">
+                            ${ability.is_hidden ? '<div style="font-size: 10px; color: #fbbf24; font-weight: 700;">H</div>' : '<div class="energy energy-' + type + '"></div>'}
+                        </div>
+                        <div class="attack-info">
+                            <div class="attack-name">${ability.ability.name.replace('-', ' ').toUpperCase()}</div>
+                            <div class="attack-description">${ability.is_hidden ? 'Habilidade Oculta' : 'Habilidade'}</div>
+                        </div>
                     </div>
-                </div>
-            `).join('');
-            
-            const attackDamage1 = Math.floor(attack * 0.5) + 10;
-            const attackDamage2 = Math.floor(attack * 1.2) + 30;
+                `).slice(0, 3).join('');
+
+            const pokemonDescription = pokemon.descricao || 'Sem descrição disponível para este Pokémon.';
             
             cardContent.innerHTML = `
                 <div class="card-header">
@@ -867,9 +1120,10 @@
                 
                 <div class="pokemon-image-container">
                     <img 
-                        src="${pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default}" 
+                        src="${imageUrl}" 
                         alt="${pokemon.name}"
                         class="pokemon-image"
+                        onerror="this.onerror=null;this.src='https://via.placeholder.com/160?text=?';"
                     />
                 </div>
                 
@@ -878,9 +1132,29 @@
                     <span>${pokemon.types.map(t => t.type.name).join(' / ')}</span>
                     <span>Altura: ${pokemon.height / 10}m | Peso: ${pokemon.weight / 10}kg</span>
                 </div>
-                
-                <div class="attacks">
-                    ${abilitiesHTML}
+
+                <div class="card-tabs">
+                    <button class="card-tab-btn active" data-tab-target="attacks">Ataques</button>
+                    <button class="card-tab-btn" data-tab-target="info">Tipo e descrição</button>
+                </div>
+
+                <div class="tab-content" id="tab-attacks">
+                    <div class="attacks">
+                        ${attacksHTML}
+                    </div>
+                </div>
+
+                <div class="tab-content hidden" id="tab-info">
+                    <div class="info-tab-panel">
+                        <div>
+                            <div class="info-block-title">Tipo</div>
+                            <div class="info-block-text">${pokemon.types.map(t => t.type.name).join(' / ')}</div>
+                        </div>
+                        <div>
+                            <div class="info-block-title">Descrição</div>
+                            <div class="info-block-text">${pokemonDescription}</div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="ex-rule">
@@ -913,6 +1187,93 @@
                 
                 <div class="pokemon-id">Illus. Pokémon TCG</div>
             `;
+
+            bindCardTabs();
+        }
+
+        function bindCardTabs() {
+            const buttons = document.querySelectorAll('.card-tab-btn');
+            const attacksPanel = document.getElementById('tab-attacks');
+            const infoPanel = document.getElementById('tab-info');
+
+            buttons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const target = button.getAttribute('data-tab-target');
+
+                    buttons.forEach((btn) => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    if (target === 'info') {
+                        infoPanel?.classList.remove('hidden');
+                        attacksPanel?.classList.add('hidden');
+                    } else {
+                        attacksPanel?.classList.remove('hidden');
+                        infoPanel?.classList.add('hidden');
+                    }
+                });
+            });
+        }
+
+        function initializeModalTabs() {
+            const tabButtons = document.querySelectorAll('.modal-tab-btn');
+            const basicTab = document.getElementById('modal-tab-basic');
+            const attacksTab = document.getElementById('modal-tab-attacks');
+
+            tabButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const tab = button.getAttribute('data-modal-tab');
+                    tabButtons.forEach((b) => b.classList.remove('active'));
+                    button.classList.add('active');
+
+                    if (tab === 'attacks') {
+                        attacksTab?.classList.remove('hidden');
+                        basicTab?.classList.add('hidden');
+                    } else {
+                        basicTab?.classList.remove('hidden');
+                        attacksTab?.classList.add('hidden');
+                    }
+                });
+            });
+        }
+
+        function buildAttackInputs(count) {
+            const builder = document.getElementById('attacksBuilder');
+            if (!builder) return;
+
+            const safeCount = Math.max(1, Math.min(6, Number(count) || 1));
+            builder.innerHTML = '';
+
+            for (let i = 0; i < safeCount; i++) {
+                const row = document.createElement('div');
+                row.className = 'attack-builder-row';
+                row.innerHTML = `
+                    <div class="attack-builder-title">Ataque ${i + 1}</div>
+                    <label>Nome do ataque
+                        <input type="text" class="attack-name-input" maxlength="100" placeholder="Ex.: Lâmina Sombria" />
+                    </label>
+                    <label>Dano
+                        <input type="number" class="attack-damage-input" min="0" max="9999" placeholder="Ex.: 120" />
+                    </label>
+                    <label>Descrição
+                        <textarea class="attack-description-input" placeholder="Descreva o efeito do ataque"></textarea>
+                    </label>
+                `;
+                builder.appendChild(row);
+            }
+        }
+
+        function collectAttacksFromModal() {
+            const names = Array.from(document.querySelectorAll('.attack-name-input'));
+            const damages = Array.from(document.querySelectorAll('.attack-damage-input'));
+            const descriptions = Array.from(document.querySelectorAll('.attack-description-input'));
+
+            const attacks = names.map((nameInput, idx) => ({
+                name: (nameInput.value || '').trim(),
+                damage: (damages[idx]?.value || '').trim(),
+                description: (descriptions[idx]?.value || '').trim(),
+            })).filter((attack) => attack.name || attack.damage || attack.description);
+
+            return attacks;
         }
 
         function toggleFavorite() {
@@ -972,6 +1333,21 @@
             const favoriteBtn = document.getElementById('favoriteBtn');
             const searchBtn = document.getElementById('searchBtn');
             const searchInput = document.getElementById('searchInput');
+            const openCreateModalBtn = document.getElementById('openCreateModalBtn');
+            const closeCreateModalBtn = document.getElementById('closeCreateModalBtn');
+            const createPokemonModal = document.getElementById('createPokemonModal');
+            const createPokemonForm = document.getElementById('createPokemonForm');
+            const attackCountInput = document.getElementById('attackCountInput');
+            const attacksJsonInput = document.getElementById('attacksJsonInput');
+
+            initializeModalTabs();
+            buildAttackInputs(attackCountInput?.value || 1);
+
+            if (attackCountInput) {
+                attackCountInput.addEventListener('input', function () {
+                    buildAttackInputs(attackCountInput.value);
+                });
+            }
             
             if (newPokemonBtn) {
                 newPokemonBtn.addEventListener('click', function(e) {
@@ -1021,6 +1397,88 @@
             } else {
                 console.error('Input searchInput não encontrado');
             }
+
+            if (openCreateModalBtn && createPokemonModal) {
+                openCreateModalBtn.addEventListener('click', function () {
+                    createPokemonModal.classList.add('show');
+                });
+            }
+
+            if (closeCreateModalBtn && createPokemonModal) {
+                closeCreateModalBtn.addEventListener('click', function () {
+                    createPokemonModal.classList.remove('show');
+                });
+            }
+
+            if (createPokemonModal) {
+                createPokemonModal.addEventListener('click', function (e) {
+                    if (e.target === createPokemonModal) {
+                        createPokemonModal.classList.remove('show');
+                    }
+                });
+            }
+
+            if (createPokemonForm) {
+                createPokemonForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+
+                    const feedback = document.getElementById('createPokemonFeedback');
+                    const submitBtn = document.getElementById('submitCreatePokemonBtn');
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                    if (attacksJsonInput) {
+                        attacksJsonInput.value = JSON.stringify(collectAttacksFromModal());
+                    }
+                    const formData = new FormData(createPokemonForm);
+
+                    feedback.textContent = 'Salvando...';
+                    feedback.className = 'modal-feedback';
+                    submitBtn.disabled = true;
+
+                    try {
+                        const response = await fetch('/pokemons', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken || '',
+                                'Accept': 'application/json'
+                            },
+                            body: formData
+                        });
+
+                        const data = await response.json().catch(() => ({}));
+
+                        if (!response.ok) {
+                            const validation = data.errors ? Object.values(data.errors).flat().join(' | ') : null;
+                            throw new Error(validation || data.message || 'Não foi possível cadastrar o Pokémon.');
+                        }
+
+                        feedback.textContent = `Pokémon cadastrado com sucesso! ID: ${data?.pokemon?.id ?? '-'}`;
+                        feedback.className = 'modal-feedback success';
+                        createPokemonForm.reset();
+                        buildAttackInputs(1);
+                        if (attackCountInput) {
+                            attackCountInput.value = 1;
+                        }
+
+                        if (createPokemonModal) {
+                            setTimeout(() => createPokemonModal.classList.remove('show'), 600);
+                        }
+
+                        if (data?.pokemon) {
+                            currentPokemon = data.pokemon;
+                            renderCard(data.pokemon);
+                            updateFavoriteButton();
+                            if (searchInput) {
+                                searchInput.value = data.pokemon.name || '';
+                            }
+                        }
+                    } catch (error) {
+                        feedback.textContent = error.message || 'Erro ao cadastrar Pokémon.';
+                        feedback.className = 'modal-feedback error';
+                    } finally {
+                        submitBtn.disabled = false;
+                    }
+                });
+            }
         }
 
         // Renderizar lista de favoritos
@@ -1038,8 +1496,18 @@
             
             for (const pokemonId of favorites) {
                 try {
-                    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
-                    const pokemon = await response.json();
+                    let pokemon;
+                    if (Number(pokemonId) >= 1026) {
+                        const localResponse = await fetch(`/pokemons/search?q=${encodeURIComponent(pokemonId)}`);
+                        if (!localResponse.ok) {
+                            continue;
+                        }
+                        const localData = await localResponse.json();
+                        pokemon = localData.pokemon;
+                    } else {
+                        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+                        pokemon = await response.json();
+                    }
                     
                     const favoriteItem = document.createElement('div');
                     favoriteItem.className = 'favorite-item';

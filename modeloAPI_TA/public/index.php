@@ -1,20 +1,20 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Application; // Tipo/contrato da aplicação Laravel (container principal)
+use Illuminate\Http\Request; // Classe que representa a requisição HTTP atual
 
-define('LARAVEL_START', microtime(true));
+define('LARAVEL_START', microtime(true)); // Marca o início do request (usado para medir tempo de execução)
 
-// Determine if the application is in maintenance mode...
-if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
-    require $maintenance;
-}
+// Verifica se o app está em modo manutenção (quando o Laravel “derruba” a app para manutenção).
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) { // Se existir o arquivo de manutenção...
+    require $maintenance; // ...carrega esse arquivo, que normalmente retorna uma resposta de manutenção
+} // Fim do bloco de manutenção
 
-// Register the Composer autoloader...
-require __DIR__.'/../vendor/autoload.php';
+// Registra o autoloader do Composer (para carregar classes automaticamente).
+require __DIR__.'/../vendor/autoload.php'; // Carrega dependências e classes do projeto via Composer
 
-// Bootstrap Laravel and handle the request...
-/** @var Application $app */
-$app = require_once __DIR__.'/../bootstrap/app.php';
+// Inicializa (bootstrap) o Laravel e prepara a aplicação para atender a requisição.
+/** @var Application $app */ // Ajuda o editor/IDE a entender o tipo da variável $app
+$app = require_once __DIR__.'/../bootstrap/app.php'; // Monta a instância da aplicação (container + config + rotas)
 
-$app->handleRequest(Request::capture());
+$app->handleRequest(Request::capture()); // Captura a requisição atual e manda o Laravel processar (rotas/middlewares/controllers)
