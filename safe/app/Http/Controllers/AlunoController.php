@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aluno;
+use App\Models\Curso;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -12,14 +13,16 @@ class AlunoController extends Controller
 {
     public function index(): View
     {
-        $alunos = Aluno::query()->latest()->get();
+        $alunos = Aluno::query()->with('curso')->latest()->get();
 
         return view('alunos.index', compact('alunos'));
     }
 
     public function create(): View
     {
-        return view('alunos.create');
+        return view('alunos.create', [
+            'cursos' => $this->cursosParaSelect(),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -34,17 +37,24 @@ class AlunoController extends Controller
             'idade' => 'required|integer|min:1|max:120',
             'responsavel_nome' => 'required|string|max:255',
             'responsavel_telefone' => 'required|string|max:20',
-            'curso' => 'required|string|max:255',
+            'curso_id' => 'required|exists:cursos,id',
         ], [], [
             'nome_completo' => 'nome completo',
             'cpf' => 'CPF',
             'responsavel_nome' => 'nome do responsável',
             'responsavel_telefone' => 'telefone do responsável',
+            'curso_id' => 'curso',
         ]);
+
+        $curso = Curso::findOrFail($validated['curso_id']);
+        if ($curso->alunos()->count() >= $curso->vagas) {
+            return back()
+                ->withInput()
+                ->with('error', 'Este curso já atingiu o limite de vagas ('.$curso->vagas.').');
+        }
 
         Aluno::create([
             ...$validated,
-            'curso' => trim($validated['curso']),
             'cadastrado_por' => auth()->id(),
         ]);
 
@@ -55,7 +65,10 @@ class AlunoController extends Controller
 
     public function edit(Aluno $aluno): View
     {
-        return view('alunos.edit', compact('aluno'));
+        return view('alunos.edit', [
+            'aluno' => $aluno,
+            'cursos' => $this->cursosParaSelect(),
+        ]);
     }
 
     public function update(Request $request, Aluno $aluno): RedirectResponse
@@ -70,14 +83,26 @@ class AlunoController extends Controller
             'idade' => 'required|integer|min:1|max:120',
             'responsavel_nome' => 'required|string|max:255',
             'responsavel_telefone' => 'required|string|max:20',
-            'curso' => 'required|string|max:255',
+            'curso_id' => 'required|exists:cursos,id',
         ]);
 
-        $validated['curso'] = trim($validated['curso']);
+        $curso = Curso::findOrFail($validated['curso_id']);
+        $ocupadas = $curso->alunos()->where('id', '!=', $aluno->id)->count();
+        if ($ocupadas >= $curso->vagas) {
+            return back()
+                ->withInput()
+                ->with('error', 'Este curso já atingiu o limite de vagas ('.$curso->vagas.').');
+        }
+
         $aluno->update($validated);
 
         return redirect()
             ->route('alunos.index')
             ->with('success', 'Dados do aluno atualizados!');
+    }
+
+    private function cursosParaSelect()
+    {
+        return Curso::query()->withCount('alunos')->orderBy('nome')->orderBy('tipo')->get();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CardSaidaLiberado;
 use App\Models\Aluno;
 use App\Models\CardSaida;
 use App\Services\CardSaidaService;
@@ -18,24 +19,29 @@ class CardSaidaController extends Controller
 
     public function index(): View
     {
-        $cards = CardSaida::with(['aluno', 'diretor', 'liberadoPor'])
+        $solicitacoes = CardSaida::with(['aluno.curso', 'diretor', 'liberadoPor'])
             ->latest()
             ->get();
 
-        return view('cards.index', compact('cards'));
+        return view('solicitacoes.index', compact('solicitacoes'));
     }
 
     public function create(): View
     {
-        $alunos = Aluno::query()->orderBy('nome_completo')->get();
-
-        return view('cards.create', [
-            'alunos' => $alunos,
-            'totalAulas' => CardSaida::TOTAL_AULAS,
-        ]);
+        return view('solicitacoes.create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function createSaida(): View
+    {
+        return view('solicitacoes.create-saida', $this->dadosFormulario());
+    }
+
+    public function createEntradaAtrasada(): View
+    {
+        return view('solicitacoes.create-entrada', $this->dadosFormulario());
+    }
+
+    public function storeSaida(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'aluno_id' => 'required|exists:alunos,id',
@@ -45,33 +51,63 @@ class CardSaidaController extends Controller
             'aulas_falta.*' => 'integer|min:1|max:'.CardSaida::TOTAL_AULAS,
         ]);
 
-        $aulasFalta = collect($validated['aulas_falta'] ?? [])
-            ->map(fn ($a) => (int) $a)
-            ->unique()
-            ->sort()
-            ->values()
-            ->all();
+        $aulasFalta = $this->normalizarAulas($validated['aulas_falta'] ?? []);
+        $aluno = Aluno::with('curso')->findOrFail($validated['aluno_id']);
 
-        $aluno = Aluno::findOrFail($validated['aluno_id']);
-
-        $card = $this->cardSaidaService->criar($aluno, [
+        $card = $this->cardSaidaService->criarSaida($aluno, [
             'horario_saida' => $validated['horario_saida'],
             'responsavel_autorizou' => $validated['responsavel_autorizou'],
             'qtd_faltas' => count($aulasFalta),
             'aulas_falta' => $aulasFalta,
         ], auth()->id());
 
-        Log::info("SAFE - Card de saída criado: {$aluno->nome_completo} às {$card->horario_saida}");
+        Log::info("SENAI - Saída criada: {$aluno->nome_completo}");
 
         return redirect()
-            ->route('cards.index')
-            ->with('success', 'Card de saída criado! Professor e portaria foram notificados.');
+            ->route('solicitacoes.index')
+            ->with('success', 'Solicitação de saída registrada! Professor e porteiro foram notificados.');
+    }
+
+    public function storeEntradaAtrasada(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'aluno_id' => 'required|exists:alunos,id',
+            'horario_entrada' => 'required|date_format:H:i',
+            'responsavel_autorizou' => 'required|string|max:255',
+            'aulas_falta' => 'required|array|min:1',
+            'aulas_falta.*' => 'integer|min:1|max:'.CardSaida::TOTAL_AULAS,
+        ], [
+            'aulas_falta.required' => 'Selecione pelo menos uma aula com falta por causa da entrada.',
+            'aulas_falta.min' => 'Selecione pelo menos uma aula com falta por causa da entrada.',
+        ]);
+
+        $aulasFalta = $this->normalizarAulas($validated['aulas_falta']);
+        $aluno = Aluno::with('curso')->findOrFail($validated['aluno_id']);
+
+        $this->cardSaidaService->criarEntradaAtrasada($aluno, [
+            'horario_entrada' => $validated['horario_entrada'],
+            'responsavel_autorizou' => $validated['responsavel_autorizou'],
+            'qtd_faltas' => count($aulasFalta),
+            'aulas_falta' => $aulasFalta,
+        ], auth()->id());
+
+        Log::info("SENAI - Entrada atrasada criada: {$aluno->nome_completo}");
+
+        return redirect()
+            ->route('solicitacoes.index')
+            ->with('success', 'Entrada atrasada registrada! Professor e porteiro foram notificados.');
+    }
+
+    /** @deprecated Use storeSaida() */
+    public function store(Request $request): RedirectResponse
+    {
+        return $this->storeSaida($request);
     }
 
     public function liberar(CardSaida $card): RedirectResponse
     {
         if (! $card->podeLiberar()) {
-            return back()->with('error', 'Este aluno já foi liberado ou não possui card ativo.');
+            return back()->with('error', 'Esta solicitação já foi liberada ou não está pendente.');
         }
 
         $card->update([
@@ -80,8 +116,33 @@ class CardSaidaController extends Controller
             'liberado_por' => auth()->id(),
         ]);
 
-        Log::info("SAFE - Aluno liberado na portaria: {$card->aluno->nome_completo}");
+        $card->load('aluno');
+        CardSaidaLiberado::dispatch($card);
 
-        return back()->with('success', 'Aluno liberado no portão com sucesso!');
+        $msg = $card->isEntradaAtrasada()
+            ? 'Entrada liberada com sucesso!'
+            : 'Saída liberada com sucesso!';
+
+        Log::info("SENAI - Solicitação liberada: {$card->aluno->nome_completo} ({$card->tipo})");
+
+        return back()->with('success', $msg);
+    }
+
+    private function dadosFormulario(): array
+    {
+        return [
+            'alunos' => Aluno::query()->with('curso')->orderBy('nome_completo')->get(),
+            'totalAulas' => CardSaida::TOTAL_AULAS,
+        ];
+    }
+
+    private function normalizarAulas(array $aulas): array
+    {
+        return collect($aulas)
+            ->map(fn ($a) => (int) $a)
+            ->unique()
+            ->sort()
+            ->values()
+            ->all();
     }
 }

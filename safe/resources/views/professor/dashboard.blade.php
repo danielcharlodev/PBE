@@ -1,21 +1,21 @@
 @extends('layouts.safe')
 
-@section('title', 'Notificações - Professor')
+@section('title', 'Notificações - SENAI')
 
 @section('content')
-    <div class="toolbar">
+    <div class="page-head">
         <div>
             <h2 class="page-title">Notificações</h2>
             <p class="page-subtitle">
-                Curso: <strong>{{ auth()->user()->curso ?? 'Não definido' }}</strong>
-                — você recebe avisos de alunos do seu curso.
+                Cursos: <strong>{{ $user->cursosEnsino->pluck('nome')->join(', ') ?: ($user->curso ?? 'Não definido') }}</strong>
+                — você recebe avisos de saídas e entradas atrasadas dos seus cursos.
             </p>
         </div>
     </div>
 
     @if (! auth()->user()->curso)
         <div class="alert alert-error">
-            Seu usuário não possui curso vinculado. Peça à diretoria para configurar o campo curso no cadastro.
+            Seu usuário não possui curso vinculado. Peça ao AQV para configurar o campo curso no cadastro.
         </div>
     @endif
 

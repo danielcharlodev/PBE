@@ -34,8 +34,20 @@
 </div>
 
 <div class="form-group">
-    <label for="curso">Curso</label>
-    <input id="curso" type="text" name="curso" class="form-control"
-        value="{{ old('curso', $aluno->curso ?? '') }}" placeholder="Ex: Informática" required>
-    @error('curso')<p class="form-error">{{ $message }}</p>@enderror
+    <label for="curso_id">Curso</label>
+    @if ($cursos->isEmpty())
+        <div class="info-inline">
+            Nenhum curso cadastrado. <a href="{{ route('cursos.create') }}">Cadastre um curso</a> primeiro.
+        </div>
+    @else
+        <select id="curso_id" name="curso_id" class="form-control" required>
+            <option value="">Selecione o curso</option>
+            @foreach ($cursos as $curso)
+                <option value="{{ $curso->id }}" @selected(old('curso_id', $aluno->curso_id ?? '') == $curso->id)>
+                    {{ $curso->nome }} — {{ $curso->tipoLabel() }} ({{ $curso->alunos_count }}/{{ $curso->vagas }} vagas)
+                </option>
+            @endforeach
+        </select>
+    @endif
+    @error('curso_id')<p class="form-error">{{ $message }}</p>@enderror
 </div>

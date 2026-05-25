@@ -14,7 +14,7 @@ class Aluno extends Model
         'idade',
         'responsavel_nome',
         'responsavel_telefone',
-        'curso',
+        'curso_id',
         'cadastrado_por',
     ];
 
@@ -25,14 +25,25 @@ class Aluno extends Model
         ];
     }
 
+    public function curso(): BelongsTo
+    {
+        return $this->belongsTo(Curso::class, 'curso_id');
+    }
+
     public function cadastradoPor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'cadastrado_por');
     }
 
-    public function cardsSaida(): HasMany
+    public function solicitacoesSaida(): HasMany
     {
         return $this->hasMany(CardSaida::class, 'aluno_id');
+    }
+
+    /** @deprecated Use solicitacoesSaida() */
+    public function cardsSaida(): HasMany
+    {
+        return $this->solicitacoesSaida();
     }
 
     public function getCpfFormatadoAttribute(): string

@@ -1,9 +1,9 @@
 @extends('layouts.safe')
 
-@section('title', 'Editar colaborador - SAFE')
+@section('title', 'Editar colaborador - SENAI')
 
 @section('content')
-    <div class="toolbar">
+    <div class="page-head">
         <div>
             <h2 class="page-title">Editar colaborador</h2>
             <p class="page-subtitle">{{ $usuario->name }} — {{ $usuario->cargoLabel() }}</p>
@@ -16,7 +16,7 @@
             @csrf
             @method('PUT')
             @include('usuarios._form', ['usuario' => $usuario])
-            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.75rem;">Atualizar</button>
+            <button type="submit" class="btn btn-primary btn-block-spaced">Atualizar</button>
         </form>
     </div>
 @endsection

@@ -10,13 +10,13 @@ class PortariaDashboardController extends Controller
 {
     public function __invoke(): View
     {
-        $cards = CardSaida::with('aluno')
+        $cards = CardSaida::with('aluno.curso')
             ->where('status', CardSaida::STATUS_PENDENTE)
             ->latest()
             ->get();
 
         $notificacoes = Notificacao::query()
-            ->with(['cardSaida.aluno'])
+            ->with(['cardSaida.aluno.curso'])
             ->where('user_id', auth()->id())
             ->where('tipo', 'portaria')
             ->latest()

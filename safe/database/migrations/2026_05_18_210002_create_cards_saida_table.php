@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('aluno_id')->constrained('alunos')->cascadeOnDelete();
             $table->foreignId('diretor_id')->constrained('users')->cascadeOnDelete();
-            $table->time('horario_saida');
+            $table->time('horario_saida')->nullable();
             $table->string('responsavel_autorizou');
             $table->unsignedTinyInteger('qtd_faltas')->default(0);
             $table->json('aulas_falta')->nullable();

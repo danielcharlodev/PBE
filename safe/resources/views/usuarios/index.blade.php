@@ -1,12 +1,12 @@
 @extends('layouts.safe')
 
-@section('title', 'Equipe - SAFE')
+@section('title', 'Equipe - SENAI')
 
 @section('content')
-    <div class="toolbar">
+    <div class="page-head">
         <div>
             <h2 class="page-title">Equipe escolar</h2>
-            <p class="page-subtitle">Professores e portaria cadastrados no sistema.</p>
+            <p class="page-subtitle">Professores e porteiros cadastrados no sistema.</p>
         </div>
         <a href="{{ route('usuarios.create') }}" class="btn btn-primary">+ Novo colaborador</a>
     </div>
@@ -27,7 +27,7 @@
                         <th>Matrícula</th>
                         <th>Curso / Setor</th>
                         <th>Status</th>
-                        <th></th>
+                        <th class="table-actions-head">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +39,7 @@
                             <td>{{ $usuario->matricula }}</td>
                             <td>
                                 @if ($usuario->role === 'professor')
-                                    {{ $usuario->curso }}
+                                    {{ $usuario->cursosEnsino->map(fn ($c) => $c->nomeCompleto())->join(', ') ?: '—' }}
                                 @else
                                     {{ $usuario->setor }} ({{ $usuario->turnoLabel() }})
                                 @endif
@@ -49,15 +49,22 @@
                                     {{ $usuario->ativo ? 'Ativo' : 'Inativo' }}
                                 </span>
                             </td>
-                            <td style="white-space:nowrap;">
-                                <a href="{{ route('usuarios.edit', $usuario) }}">Editar</a>
-                                <form method="POST" action="{{ route('usuarios.toggle-ativo', $usuario) }}" style="display:inline;">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="btn btn-secondary" style="padding:0.35rem 0.6rem;font-size:0.8rem;">
-                                        {{ $usuario->ativo ? 'Desativar' : 'Reativar' }}
-                                    </button>
-                                </form>
+                            <td class="table-actions">
+                                <div class="table-actions-inner">
+                                    <a href="{{ route('usuarios.edit', $usuario) }}" class="btn-table btn-table-edit">
+                                        Editar
+                                    </a>
+                                    <form method="POST"
+                                        action="{{ route('usuarios.destroy', $usuario) }}"
+                                        class="inline-form"
+                                        onsubmit="return confirm('Excluir {{ $usuario->name }}? Esta ação não pode ser desfeita.');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-table btn-table-delete">
+                                            Excluir
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

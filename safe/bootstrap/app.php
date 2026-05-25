@@ -11,8 +11,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
 
-    ->withEvents([
-    ])
+    ->withEvents()
 
     ->withMiddleware(function (Middleware $middleware): void {
     $middleware->alias([

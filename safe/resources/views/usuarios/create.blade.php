@@ -1,12 +1,12 @@
 @extends('layouts.safe')
 
-@section('title', 'Cadastrar colaborador - SAFE')
+@section('title', 'Cadastrar colaborador - SENAI')
 
 @section('content')
-    <div class="toolbar">
+    <div class="page-head">
         <div>
             <h2 class="page-title">Cadastrar colaborador</h2>
-            <p class="page-subtitle">Professor ou portaria. O e-mail e a senha serão usados no login.</p>
+            <p class="page-subtitle">Professor ou porteiro. Professores são vinculados aos cursos no cadastro de cursos.</p>
         </div>
         <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">← Voltar</a>
     </div>
@@ -15,7 +15,7 @@
         <form method="POST" action="{{ route('usuarios.store') }}">
             @csrf
             @include('usuarios._form')
-            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.75rem;">Salvar colaborador</button>
+            <button type="submit" class="btn btn-primary btn-block-spaced">Salvar colaborador</button>
         </form>
     </div>
 @endsection

@@ -1,9 +1,9 @@
 @extends('layouts.safe')
 
-@section('title', 'Cadastrar aluno - SAFE')
+@section('title', 'Cadastrar aluno - SENAI')
 
 @section('content')
-    <div class="toolbar">
+    <div class="page-head">
         <div>
             <h2 class="page-title">Cadastrar aluno</h2>
             <p class="page-subtitle">Preencha os dados do aluno e do responsável.</p>
@@ -14,8 +14,8 @@
     <div class="form-card">
         <form method="POST" action="{{ route('alunos.store') }}">
             @csrf
-            @include('alunos._form')
-            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem;">Salvar aluno</button>
+            @include('alunos._form', ['cursos' => $cursos])
+            <button type="submit" class="btn btn-primary btn-block-spaced">Salvar aluno</button>
         </form>
     </div>
 @endsection

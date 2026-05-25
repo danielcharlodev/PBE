@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Support\UserRole;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
@@ -15,7 +17,7 @@ class UsuarioController extends Controller
     {
         $usuarios = User::query()
             ->equipe()
-            ->with('cadastradoPor')
+            ->with(['cadastradoPor', 'cursosEnsino'])
             ->latest()
             ->get();
 
@@ -46,16 +48,18 @@ class UsuarioController extends Controller
 
     public function edit(User $usuario): View
     {
-        if (! in_array($usuario->role, ['professor', 'portaria'], true)) {
+        if (! in_array($usuario->role, UserRole::EQUIPE, true)) {
             abort(404);
         }
 
-        return view('usuarios.edit', compact('usuario'));
+        return view('usuarios.edit', [
+            'usuario' => $usuario,
+        ]);
     }
 
     public function update(Request $request, User $usuario): RedirectResponse
     {
-        if (! in_array($usuario->role, ['professor', 'portaria'], true)) {
+        if (! in_array($usuario->role, UserRole::EQUIPE, true)) {
             abort(404);
         }
 
@@ -73,23 +77,36 @@ class UsuarioController extends Controller
             ->with('success', 'Usuário atualizado com sucesso!');
     }
 
-    public function toggleAtivo(User $usuario): RedirectResponse
+    public function destroy(User $usuario): RedirectResponse
     {
-        if (! in_array($usuario->role, ['professor', 'portaria'], true)) {
+        if (! in_array($usuario->role, UserRole::EQUIPE, true)) {
             abort(404);
         }
 
-        $usuario->update(['ativo' => ! $usuario->ativo]);
+        if ($usuario->id === auth()->id()) {
+            return back()->with('error', 'Você não pode excluir seu próprio usuário.');
+        }
 
-        $msg = $usuario->ativo ? 'Usuário reativado.' : 'Usuário desativado.';
+        DB::transaction(function () use ($usuario) {
+            $usuario->cursosEnsino()->detach();
 
-        return back()->with('success', $msg);
+            DB::table('users')
+                ->where('cadastrado_por', $usuario->id)
+                ->update(['cadastrado_por' => null]);
+
+            $usuario->delete();
+        });
+
+        return redirect()
+            ->route('usuarios.index')
+            ->with('success', 'Colaborador excluído com sucesso.');
     }
 
     private function validar(Request $request, ?User $usuario = null, bool $atualizando = false): array
     {
         $request->merge([
             'cpf' => User::normalizarCpf($request->input('cpf', '')),
+            'telefone' => User::normalizarTelefone($request->input('telefone', '')),
         ]);
 
         $rules = [
@@ -106,14 +123,20 @@ class UsuarioController extends Controller
                 'size:11',
                 Rule::unique('users', 'cpf')->ignore($usuario?->id),
             ],
-            'telefone' => 'required|string|max:20',
+            'telefone' => [
+                'required',
+                'string',
+                'min:10',
+                'max:11',
+                Rule::unique('users', 'telefone')->ignore($usuario?->id),
+            ],
             'matricula' => [
                 'required',
                 'string',
                 'max:30',
                 Rule::unique('users', 'matricula')->ignore($usuario?->id),
             ],
-            'role' => ['required', Rule::in(['professor', 'portaria'])],
+            'role' => ['required', Rule::in(UserRole::EQUIPE)],
         ];
 
         if ($atualizando) {
@@ -122,8 +145,7 @@ class UsuarioController extends Controller
             $rules['password'] = ['required', 'confirmed', Password::defaults()];
         }
 
-        if ($request->input('role') === 'professor') {
-            $rules['curso'] = 'required|string|max:255';
+        if ($request->input('role') === UserRole::PROFESSOR) {
             $rules['turno'] = 'nullable';
             $rules['setor'] = 'nullable';
         } else {
@@ -132,20 +154,23 @@ class UsuarioController extends Controller
             $rules['curso'] = 'nullable';
         }
 
-        $validated = $request->validate($rules, [], [
+        $validated = $request->validate($rules, [
+            'email.unique' => 'Este e-mail já está cadastrado no sistema.',
+            'cpf.unique' => 'Este CPF já está cadastrado no sistema.',
+            'telefone.unique' => 'Este telefone já está cadastrado no sistema.',
+        ], [
             'name' => 'nome completo',
+            'email' => 'e-mail',
             'cpf' => 'CPF',
             'matricula' => 'matrícula',
             'telefone' => 'telefone',
         ]);
 
-        $validated['curso'] = $request->input('role') === 'professor'
-            ? trim($validated['curso'] ?? '')
-            : null;
-        $validated['turno'] = $request->input('role') === 'portaria'
+        $validated['curso'] = null;
+        $validated['turno'] = $request->input('role') === UserRole::PORTARIA
             ? $validated['turno']
             : null;
-        $validated['setor'] = $request->input('role') === 'portaria'
+        $validated['setor'] = $request->input('role') === UserRole::PORTARIA
             ? trim($validated['setor'] ?? '')
             : null;
 

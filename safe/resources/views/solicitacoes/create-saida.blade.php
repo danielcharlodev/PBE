@@ -1,24 +1,24 @@
 @extends('layouts.safe')
 
-@section('title', 'Novo card de saída - SAFE')
+@section('title', 'Saída antecipada - SENAI')
 
 @section('content')
-    <div class="toolbar">
+    <div class="page-head">
         <div>
-            <h2 class="page-title">Criar card de saída</h2>
-            <p class="page-subtitle">O professor do mesmo curso e a portaria serão notificados automaticamente.</p>
+            <h2 class="page-title">Saída antecipada</h2>
+            <p class="page-subtitle">O professor do curso e o porteiro serão notificados automaticamente.</p>
         </div>
-        <a href="{{ route('cards.index') }}" class="btn btn-secondary">← Voltar</a>
+        <a href="{{ route('solicitacoes.create') }}" class="btn btn-secondary">← Voltar</a>
     </div>
 
     @if ($alunos->isEmpty())
         <div class="empty-state">
-            <p>Cadastre um aluno antes de criar um card de saída.</p>
+            <p>Cadastre um aluno (com curso) antes de criar uma solicitação.</p>
             <a href="{{ route('alunos.create') }}" class="btn btn-primary" style="margin-top:1rem;">Cadastrar aluno</a>
         </div>
     @else
         <div class="form-card">
-            <form method="POST" action="{{ route('cards.store') }}" id="form-card">
+            <form method="POST" action="{{ route('solicitacoes.store-saida') }}">
                 @csrf
 
                 <div class="form-group">
@@ -28,9 +28,8 @@
                         @foreach ($alunos as $aluno)
                             <option value="{{ $aluno->id }}"
                                 data-responsavel="{{ $aluno->responsavel_nome }}"
-                                data-curso="{{ $aluno->curso }}"
                                 @selected(old('aluno_id') == $aluno->id)>
-                                {{ $aluno->nome_completo }} — {{ $aluno->curso }}
+                                {{ $aluno->nome_completo }} — {{ $aluno->curso?->nomeCompleto() ?? 'Sem curso' }}
                             </option>
                         @endforeach
                     </select>
@@ -45,7 +44,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="responsavel_autorizou">Responsável que autorizou a saída</label>
+                    <label for="responsavel_autorizou">Responsável que autorizou</label>
                     <input type="text" id="responsavel_autorizou" name="responsavel_autorizou" class="form-control"
                         value="{{ old('responsavel_autorizou') }}" required>
                     @error('responsavel_autorizou')<p class="form-error">{{ $message }}</p>@enderror
@@ -53,7 +52,7 @@
 
                 <div class="form-group">
                     <label>Faltas nas aulas do dia (5 aulas)</label>
-                    <p class="page-subtitle" style="margin-bottom:0.75rem;">Marque as aulas em que o aluno ficará com falta.</p>
+                    <p class="hint-text">Marque as aulas em que o aluno ficará com falta.</p>
                     <div class="aulas-grid">
                         @for ($i = 1; $i <= $totalAulas; $i++)
                             <label class="aula-check">
@@ -66,7 +65,7 @@
                     @error('aulas_falta')<p class="form-error">{{ $message }}</p>@enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.75rem;">Criar card e notificar</button>
+                <button type="submit" class="btn btn-primary btn-block-spaced">Registrar saída</button>
             </form>
         </div>
     @endif

@@ -1,46 +1,47 @@
 @extends('layouts.safe')
 
-@section('title', 'Painel do diretor - SAFE')
+@section('title', 'Painel AQV - SENAI')
 
 @section('content')
-    <div class="toolbar">
+    <div class="page-head">
         <div>
-            <h2 class="page-title">Painel do diretor</h2>
-            <p class="page-subtitle">Cadastre alunos e crie cards de saída autorizados.</p>
+            <h2 class="page-title">Painel AQV</h2>
+            <p class="page-subtitle">Visão geral do controle de acesso escolar.</p>
         </div>
     </div>
 
     <div class="stats-grid">
+        <div class="stat-card"><span>Cursos</span><strong>{{ $totalCursos }}</strong></div>
         <div class="stat-card"><span>Alunos</span><strong>{{ $totalAlunos }}</strong></div>
         <div class="stat-card"><span>Equipe</span><strong>{{ $totalEquipe }}</strong></div>
-        <div class="stat-card"><span>Cards pendentes</span><strong>{{ $cardsPendentes }}</strong></div>
-        <div class="stat-card"><span>Alunos liberados</span><strong>{{ $cardsLiberados }}</strong></div>
+        <div class="stat-card"><span>Saídas pendentes</span><strong>{{ $solicitacoesPendentes }}</strong></div>
+        <div class="stat-card"><span>Saídas liberadas</span><strong>{{ $solicitacoesLiberadas }}</strong></div>
     </div>
 
     <div class="dashboard-links">
-        <a href="{{ route('usuarios.create') }}" class="dashboard-link-card">
-            <strong>Cadastrar professor / portaria</strong>
-            <span>E-mail, senha, CPF, matrícula e dados do cargo.</span>
+        <a href="{{ route('cursos.create') }}" class="dashboard-link-card">
+            <strong>Cadastrar curso</strong>
+            <span>CAI, TECNICO ou FIC — até 5 professores e vagas.</span>
         </a>
-        <a href="{{ route('usuarios.index') }}" class="dashboard-link-card">
-            <strong>Ver equipe</strong>
-            <span>Professores e porteiros cadastrados.</span>
+        <a href="{{ route('cursos.index') }}" class="dashboard-link-card">
+            <strong>Ver cursos</strong>
+            <span>Lista de cursos, professores e ocupação de vagas.</span>
+        </a>
+        <a href="{{ route('usuarios.create') }}" class="dashboard-link-card">
+            <strong>Cadastrar professor / porteiro</strong>
+            <span>E-mail, senha, CPF, matrícula e dados do cargo.</span>
         </a>
         <a href="{{ route('alunos.create') }}" class="dashboard-link-card">
             <strong>Cadastrar aluno</strong>
-            <span>Nome, CPF, idade, responsável, telefone e curso.</span>
+            <span>Vincule o aluno a um curso cadastrado.</span>
         </a>
-        <a href="{{ route('alunos.index') }}" class="dashboard-link-card">
-            <strong>Ver alunos</strong>
-            <span>Lista completa dos alunos cadastrados.</span>
+        <a href="{{ route('solicitacoes.create') }}" class="dashboard-link-card">
+            <strong>Nova solicitação</strong>
+            <span>Saída antecipada ou entrada atrasada — notifica professor e porteiro.</span>
         </a>
-        <a href="{{ route('cards.create') }}" class="dashboard-link-card">
-            <strong>Criar card de saída</strong>
-            <span>Notifica professor (mesmo curso) e portaria.</span>
-        </a>
-        <a href="{{ route('cards.index') }}" class="dashboard-link-card">
-            <strong>Ver cards</strong>
-            <span>Acompanhe saídas pendentes e liberadas.</span>
+        <a href="{{ route('solicitacoes.index') }}" class="dashboard-link-card">
+            <strong>Ver solicitações</strong>
+            <span>Saídas e entradas pendentes ou liberadas.</span>
         </a>
     </div>
 @endsection

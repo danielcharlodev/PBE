@@ -14,12 +14,18 @@ class CardSaida extends Model
 
     public const TOTAL_AULAS = 5;
 
+    public const TIPO_SAIDA = 'saida';
+
+    public const TIPO_ENTRADA_ATRASADA = 'entrada_atrasada';
+
     protected $table = 'cards_saida';
 
     protected $fillable = [
         'aluno_id',
+        'tipo',
         'diretor_id',
         'horario_saida',
+        'horario_entrada',
         'responsavel_autorizou',
         'qtd_faltas',
         'aulas_falta',
@@ -62,9 +68,55 @@ class CardSaida extends Model
         return $this->status === self::STATUS_PENDENTE;
     }
 
+    public function isEntradaAtrasada(): bool
+    {
+        return $this->tipo === self::TIPO_ENTRADA_ATRASADA;
+    }
+
+    public function tipoLabel(): string
+    {
+        return $this->isEntradaAtrasada() ? 'Entrada atrasada' : 'Saída antecipada';
+    }
+
     public function horarioSaidaFormatado(): string
     {
-        return date('H:i', strtotime((string) $this->horario_saida));
+        return $this->formatarHorario($this->horario_saida);
+    }
+
+    public function horarioEntradaFormatado(): string
+    {
+        return $this->formatarHorario($this->horario_entrada);
+    }
+
+    public function horarioPrincipalFormatado(): string
+    {
+        return $this->isEntradaAtrasada()
+            ? $this->horarioEntradaFormatado()
+            : $this->horarioSaidaFormatado();
+    }
+
+    private function formatarHorario(mixed $horario): string
+    {
+        if (! $horario) {
+            return '—';
+        }
+
+        return date('H:i', strtotime((string) $horario));
+    }
+
+    public function aulasRegistroTexto(): string
+    {
+        if ($this->isEntradaAtrasada()) {
+            if (empty($this->aulas_falta)) {
+                return $this->qtd_faltas === 0 ? 'Nenhuma aula indicada' : $this->qtd_faltas.' aula(s)';
+            }
+
+            return collect($this->aulas_falta)
+                ->map(fn ($n) => 'Aula '.$n)
+                ->implode(', ');
+        }
+
+        return $this->aulasFaltaTexto();
     }
 
     public function aulasFaltaTexto(): string

@@ -10,14 +10,16 @@ class ProfessorDashboardController extends Controller
 {
     public function index(): View
     {
+        $user = auth()->user()->load('cursosEnsino');
+
         $notificacoes = Notificacao::query()
-            ->with(['cardSaida.aluno'])
-            ->where('user_id', auth()->id())
+            ->with(['cardSaida.aluno.curso'])
+            ->where('user_id', $user->id)
             ->where('tipo', 'professor')
             ->latest()
             ->get();
 
-        return view('professor.dashboard', compact('notificacoes'));
+        return view('professor.dashboard', compact('notificacoes', 'user'));
     }
 
     public function marcarLida(Notificacao $notificacao): RedirectResponse
