@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Produtos\Schemas;
 
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
 
 class ProdutoForm
@@ -13,12 +12,28 @@ class ProdutoForm
         return $schema
             ->components([
                 TextInput::make('nome')
-                    ->required(),
-                TextInput::make('preco')
+                    ->label('Nome do produto')
                     ->required()
-                    ->numeric(),
-                Textarea::make('descricao')
-                    ->columnSpanFull(),
+                    ->maxLength(255),
+
+                TextInput::make('referencia')
+                    ->label('Referência / SKU')
+                    ->maxLength(100),
+
+                TextInput::make('preco_venda')
+                    ->label('Preço de venda')
+                    ->prefix('R$')
+                    ->numeric()
+                    ->minValue(0)
+                    ->required(),
+
+                TextInput::make('estoque')
+                    ->label('Estoque atual')
+                    ->numeric()
+                    ->default(0)
+                    ->disabled()
+                    ->dehydrated()
+                    ->helperText('Use Movimentações de Estoque para alterar a quantidade.'),
             ]);
     }
 }

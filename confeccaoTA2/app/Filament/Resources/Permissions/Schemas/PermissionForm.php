@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Permissions\Schemas;
 
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
 class PermissionForm
@@ -10,7 +11,13 @@ class PermissionForm
     {
         return $schema
             ->components([
-                //
+                TextInput::make('name')
+                    ->label('Identificador da permissão')
+                    ->placeholder('Ex.: acessar_clientes')
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->maxLength(255)
+                    ->columnSpanFull(),
             ]);
     }
 }

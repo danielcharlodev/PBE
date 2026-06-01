@@ -2,45 +2,90 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MovimentacaoEstoque extends Model
 {
-    use HasFactory;
-
-
     protected $table = 'movimentacoes_estoque';
 
-
     protected $fillable = [
+        'pedido_id',
         'produto_id',
         'tipo',
         'quantidade',
         'observacao',
     ];
 
+    protected static function booted(): void
+    {
+        static::created(function (MovimentacaoEstoque $movimentacao): void {
+            $movimentacao->aplicarNoEstoque();
+        });
 
-    public function produto()
+        static::updated(function (MovimentacaoEstoque $movimentacao): void {
+            if (! $movimentacao->wasChanged(['produto_id', 'tipo', 'quantidade'])) {
+                return;
+            }
+
+            $original = new self([
+                'produto_id' => $movimentacao->getOriginal('produto_id'),
+                'tipo' => $movimentacao->getOriginal('tipo'),
+                'quantidade' => $movimentacao->getOriginal('quantidade'),
+            ]);
+
+            $original->setRelation('produto', Produto::query()->find($movimentacao->getOriginal('produto_id')));
+            $original->reverterNoEstoque();
+
+            $movimentacao->aplicarNoEstoque();
+        });
+
+        static::deleted(function (MovimentacaoEstoque $movimentacao): void {
+            $movimentacao->reverterNoEstoque();
+        });
+    }
+
+    public function pedido(): BelongsTo
+    {
+        return $this->belongsTo(Pedido::class);
+    }
+
+    public function produto(): BelongsTo
     {
         return $this->belongsTo(Produto::class);
     }
 
-   
-    protected static function booted()
+    public function aplicarNoEstoque(): void
     {
-        
-        static::created(function ($movimentacao) {
-            $produto = $movimentacao->produto;
+        $produto = $this->produto;
 
-            if ($movimentacao->tipo === 'entrada') {
-                $produto->estoque += $movimentacao->quantidade;
-            } else {
-                // Se for saída, ele subtrai
-                $produto->estoque -= $movimentacao->quantidade; 
-            }
+        if (! $produto) {
+            return;
+        }
 
-            $produto->save();
-        });
+        if ($this->tipo === 'entrada') {
+            $produto->estoque += $this->quantidade;
+        } else {
+            $produto->estoque -= $this->quantidade;
+        }
+
+        $produto->save();
+    }
+
+    public function reverterNoEstoque(): void
+    {
+        $produto = $this->produto;
+
+        if (! $produto) {
+            return;
+        }
+
+        if ($this->tipo === 'entrada') {
+            $produto->estoque -= $this->quantidade;
+        } else {
+            $produto->estoque += $this->quantidade;
+        }
+
+        $produto->save();
     }
 }

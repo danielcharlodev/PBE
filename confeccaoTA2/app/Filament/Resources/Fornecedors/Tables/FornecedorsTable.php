@@ -16,20 +16,24 @@ class FornecedorsTable
         return $table
             ->columns([
                 TextColumn::make('nome')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->label('Endereço de Email')
-                    ->searchable(),
-                TextColumn::make('telefone')
-                    ->searchable(),
+                    ->label('Razão Social / Nome')
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('cnpj')
+                    ->label('CNPJ')
                     ->searchable(),
+
+                TextColumn::make('telefone')
+                    ->label('Telefone'),
+
+                TextColumn::make('email')
+                    ->label('E-mail')
+                    ->searchable(),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Criado em')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -37,8 +41,8 @@ class FornecedorsTable
                 //
             ])
             ->recordActions([
-                ViewAction::make()->label('Ver'),
-                EditAction::make()->label('Editar'),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -13,7 +13,8 @@ class ClienteInfolist
             ->components([
                 TextEntry::make('nome'),
                 TextEntry::make('email')
-                    ->label('Endereço de Email'),
+                    ->label('Email address')
+                    ->placeholder('-'),
                 TextEntry::make('telefone')
                     ->placeholder('-'),
                 TextEntry::make('documento')

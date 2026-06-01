@@ -16,23 +16,23 @@ class InsumosTable
         return $table
             ->columns([
                 TextColumn::make('nome')
-                    ->label('Nome')
+                    ->label('Insumo')
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('unidade_medida')
-                    ->label('Unidade de Medida')
-                    ->searchable()
-                    ->sortable(),
+                    ->label('Unidade')
+                    ->badge()
+                    ->color('gray'),
 
                 TextColumn::make('preco_custo')
-                    ->label('Preço de Custo')
+                    ->label('Custo')
                     ->money('BRL')
                     ->sortable(),
 
                 TextColumn::make('estoque')
                     ->label('Estoque')
-                    ->formatStateUsing(fn ($state) => (int) $state)
+                    ->numeric(decimalPlaces: 2)
                     ->sortable(),
 
                 TextColumn::make('created_at')
@@ -40,25 +40,16 @@ class InsumosTable
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('updated_at')
-                    ->label('Atualizado em')
-                    ->dateTime('d/m/Y H:i')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->recordActions([
-                ViewAction::make()->label('Ver'),
-                EditAction::make()->label('Editar'),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()->label('Excluir selecionados'),
+                    DeleteBulkAction::make(),
                 ]),
-            ])
-            ->defaultSort('nome', 'asc');
+            ]);
     }
 }

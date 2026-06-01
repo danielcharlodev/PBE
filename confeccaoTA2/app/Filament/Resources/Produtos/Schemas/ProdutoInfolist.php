@@ -12,11 +12,13 @@ class ProdutoInfolist
         return $schema
             ->components([
                 TextEntry::make('nome'),
-                TextEntry::make('preco')
+                TextEntry::make('referencia')
+                    ->placeholder('-'),
+                TextEntry::make('preco_venda')
+                    ->numeric()
+                    ->placeholder('-'),
+                TextEntry::make('estoque')
                     ->numeric(),
-                TextEntry::make('descricao')
-                    ->placeholder('-')
-                    ->columnSpanFull(),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

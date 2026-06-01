@@ -2,7 +2,11 @@
 
 namespace App\Filament\Resources\Clientes\Schemas;
 
+use App\Models\Cliente;
+use App\Rules\DocumentoUnico;
+use App\Support\DocumentoBr;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 
 class ClienteForm
@@ -12,14 +16,37 @@ class ClienteForm
         return $schema
             ->components([
                 TextInput::make('nome')
-                    ->required(),
+                    ->label('Nome completo')
+                    ->required()
+                    ->maxLength(255),
+
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('E-mail')
                     ->email()
-                    ->required(),
+                    ->maxLength(255),
+
                 TextInput::make('telefone')
-                    ->tel(),
-                TextInput::make('documento'),
+                    ->label('WhatsApp / Telefone')
+                    ->tel()
+                    ->mask('(99) 99999-9999')
+                    ->placeholder('(11) 99999-9999')
+                    ->dehydrateStateUsing(fn (?string $state): ?string => DocumentoBr::apenasDigitos($state))
+                    ->formatStateUsing(fn (?string $state): ?string => DocumentoBr::formatarTelefone($state))
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (?string $state, Set $set) => $set('telefone', DocumentoBr::formatarTelefone($state))),
+
+                TextInput::make('documento')
+                    ->label('CPF ou CNPJ')
+                    ->required()
+                    ->placeholder('000.000.000-00 ou 00.000.000/0000-00')
+                    ->dehydrateStateUsing(fn (?string $state): ?string => DocumentoBr::apenasDigitos($state))
+                    ->formatStateUsing(fn (?string $state): ?string => DocumentoBr::formatar($state))
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (?string $state, Set $set) => $set('documento', DocumentoBr::formatar($state)))
+                    ->rules(fn ($record) => [
+                        'required',
+                        new DocumentoUnico(Cliente::class, 'documento', $record?->id),
+                    ]),
             ]);
     }
 }

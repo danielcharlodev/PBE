@@ -2,7 +2,11 @@
 
 namespace App\Filament\Resources\Fornecedors\Schemas;
 
+use App\Models\Fornecedor;
+use App\Rules\DocumentoUnico;
+use App\Support\DocumentoBr;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 
 class FornecedorForm
@@ -12,15 +16,38 @@ class FornecedorForm
         return $schema
             ->components([
                 TextInput::make('nome')
-                    ->required(),
+                    ->label('Razão social / Nome')
+                    ->required()
+                    ->maxLength(255),
+
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('E-mail')
                     ->email()
-                    ->required(),
+                    ->maxLength(255),
+
                 TextInput::make('telefone')
-                    ->tel(),
+                    ->label('Telefone comercial')
+                    ->tel()
+                    ->mask('(99) 99999-9999')
+                    ->placeholder('(11) 3333-0000')
+                    ->dehydrateStateUsing(fn (?string $state): ?string => DocumentoBr::apenasDigitos($state))
+                    ->formatStateUsing(fn (?string $state): ?string => DocumentoBr::formatarTelefone($state))
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (?string $state, Set $set) => $set('telefone', DocumentoBr::formatarTelefone($state))),
+
                 TextInput::make('cnpj')
-                    ->required(),
+                    ->label('CNPJ')
+                    ->required()
+                    ->mask('99.999.999/9999-99')
+                    ->placeholder('00.000.000/0000-00')
+                    ->dehydrateStateUsing(fn (?string $state): ?string => DocumentoBr::apenasDigitos($state))
+                    ->formatStateUsing(fn (?string $state): ?string => DocumentoBr::formatar($state))
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (?string $state, Set $set) => $set('cnpj', DocumentoBr::formatar($state)))
+                    ->rules(fn ($record) => [
+                        'required',
+                        new DocumentoUnico(Fornecedor::class, 'cnpj', $record?->id),
+                    ]),
             ]);
     }
 }

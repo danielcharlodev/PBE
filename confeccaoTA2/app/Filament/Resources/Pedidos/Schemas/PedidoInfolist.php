@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Pedidos\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class PedidoInfolist
@@ -11,18 +12,31 @@ class PedidoInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('cliente_id')
-                    ->numeric(),
-                TextEntry::make('status'),
-                TextEntry::make('valor_total')
-                    ->numeric()
-                    ->placeholder('-'),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                Section::make()
+                    ->columns(2)
+                    ->schema([
+                        TextEntry::make('cliente.nome')
+                            ->label('Cliente'),
+
+                        TextEntry::make('status')
+                            ->label('Status')
+                            ->badge(),
+
+                        TextEntry::make('produto.nome')
+                            ->label('Produto'),
+
+                        TextEntry::make('quantidade')
+                            ->label('Quantidade'),
+
+                        TextEntry::make('valor_total')
+                            ->label('Valor do pedido')
+                            ->money('BRL')
+                            ->columnSpanFull(),
+
+                        TextEntry::make('created_at')
+                            ->label('Criado em')
+                            ->dateTime('d/m/Y H:i'),
+                    ]),
             ]);
     }
 }

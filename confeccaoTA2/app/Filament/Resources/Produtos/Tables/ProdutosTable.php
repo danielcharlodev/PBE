@@ -16,25 +16,41 @@ class ProdutosTable
         return $table
             ->columns([
                 TextColumn::make('nome')
-                    ->searchable(),
-                TextColumn::make('preco')
-                    ->numeric()
+                    ->label('Produto')
+                    ->searchable()
                     ->sortable(),
+
+                TextColumn::make('referencia')
+                    ->label('SKU')
+                    ->searchable()
+                    ->toggleable(),
+
+                TextColumn::make('preco_venda')
+                    ->label('Preço')
+                    ->money('BRL')
+                    ->sortable(),
+
+                TextColumn::make('estoque')
+                    ->label('Estoque')
+                    ->numeric()
+                    ->sortable()
+                    ->badge()
+                    ->color(fn (int $state): string => match (true) {
+                        $state <= 0 => 'danger',
+                        $state < 10 => 'warning',
+                        default => 'success',
+                    }),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Criado em')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->recordActions([
-                ViewAction::make()->label('Ver'),
-                EditAction::make()->label('Editar'),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

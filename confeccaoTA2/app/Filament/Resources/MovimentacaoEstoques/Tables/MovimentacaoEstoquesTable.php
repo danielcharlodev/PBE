@@ -15,31 +15,42 @@ class MovimentacaoEstoquesTable
     {
         return $table
             ->columns([
-                TextColumn::make('produto_id')
-                    ->numeric()
+                TextColumn::make('pedido.id')
+                    ->label('Pedido')
+                    ->formatStateUsing(fn (?int $state): string => $state ? "#{$state}" : '—')
                     ->sortable(),
+
+                TextColumn::make('produto.nome')
+                    ->label('Produto')
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('tipo')
-                    ->badge(),
+                    ->label('Tipo')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => $state === 'entrada' ? 'Entrada' : 'Saída')
+                    ->color(fn (string $state): string => $state === 'entrada' ? 'success' : 'danger'),
+
                 TextColumn::make('quantidade')
+                    ->label('Quantidade')
                     ->numeric()
                     ->sortable(),
+
                 TextColumn::make('observacao')
-                    ->searchable(),
+                    ->label('Observação')
+                    ->searchable()
+                    ->limit(40),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Data')
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable(),
             ])
-            ->filters([
-                //
-            ])
+            ->defaultSort('created_at', 'desc')
+            ->filters([])
             ->recordActions([
-                ViewAction::make()->label('Ver'),
-                EditAction::make()->label('Editar'),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

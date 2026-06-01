@@ -3,23 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Produto;
-use App\Models\Pedido;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ItemPedido extends Model
 {
-    // 🔓 Libera preenchimento em massa (todas as colunas)
     protected $guarded = [];
 
-    // 🔗 RELACIONAMENTO: Item do pedido → Produto
-    public function produto()
-    {
-        return $this->belongsTo(Produto::class);
-    }
-
-    // 🔗 RELACIONAMENTO: Item do pedido → Pedido
-    public function pedido()
+    public function pedido(): BelongsTo
     {
         return $this->belongsTo(Pedido::class);
+    }
+
+    public function produto(): BelongsTo
+    {
+        return $this->belongsTo(Produto::class);
     }
 }

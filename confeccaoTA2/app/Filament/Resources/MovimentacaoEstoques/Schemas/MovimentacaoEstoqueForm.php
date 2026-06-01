@@ -12,16 +12,31 @@ class MovimentacaoEstoqueForm
     {
         return $schema
             ->components([
-                TextInput::make('produto_id')
-                    ->required()
-                    ->numeric(),
-                Select::make('tipo')
-                    ->options(['entrada' => 'Entrada', 'saida' => 'Saida'])
+                Select::make('produto_id')
+                    ->relationship('produto', 'nome')
+                    ->label('Produto')
+                    ->searchable()
+                    ->preload()
                     ->required(),
+
+                Select::make('tipo')
+                    ->label('Tipo')
+                    ->options([
+                        'entrada' => 'Entrada',
+                        'saida' => 'Saída',
+                    ])
+                    ->required(),
+
                 TextInput::make('quantidade')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('observacao'),
+                    ->label('Quantidade')
+                    ->numeric()
+                    ->minValue(1)
+                    ->required(),
+
+                TextInput::make('observacao')
+                    ->label('Observação')
+                    ->placeholder('Ex.: compra, ajuste, devolução')
+                    ->maxLength(255),
             ]);
     }
 }
