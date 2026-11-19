@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+// ATENÇÃO: as três rotas abaixo usam o mesmo caminho '/'.
+// No Laravel, quando duas rotas têm o mesmo método e caminho, a ÚLTIMA
+// registrada vence. Por isso, acessar '/' redireciona para admin.dashboard.
+// As duas primeiras ficaram aqui só como exemplo da aula.
 Route::get('/', function () {
     return view('welcome');
 });

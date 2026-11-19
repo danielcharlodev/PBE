@@ -1,5 +1,8 @@
 <?php
 
+// Cópia de estudo com as rotas da Aula 1 (empresa, any, match, parâmetros).
+// O Laravel só carrega routes/web.php, então este arquivo NÃO é usado pelo app.
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
