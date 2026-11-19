@@ -1,0 +1,33 @@
+# .gitignore da raiz do repositório PBE
+# Cada projeto Laravel já tem o seu próprio .gitignore.
+# Este arquivo é uma "rede de segurança" para o repositório inteiro.
+
+# Dependências (reinstale com `composer install` / `npm install`)
+vendor/
+node_modules/
+# ...exceto a pasta "vendor" que faz parte do próprio WordPress
+!formativas/FORMATIVA_WORDPRESS/wp-includes/js/dist/vendor/
+
+# Configurações locais e segredos
+.env
+.env.backup
+.env.production
+
+# Arquivos gerados pelo build do front-end
+public/build/
+public/hot
+
+# Logs e caches
+*.log
+.phpunit.result.cache
+.phpunit.cache/
+
+# Arquivos temporários do Word/Excel (ex.: ~$DOCUMENTO.docx)
+~$*
+
+# Lixo do sistema operacional e de editores
+Thumbs.db
+Desktop.ini
+.DS_Store
+.idea/
+.vscode/
